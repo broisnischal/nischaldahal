@@ -1,3 +1,5 @@
+"use client";
+
 import Hero from "@/components/Home";
 import Images from "@/components/Images";
 import Footer from "@/components/Footer";
