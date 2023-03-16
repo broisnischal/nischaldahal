@@ -19,8 +19,8 @@ const Footer = () => {
             {item}
           </a>
         ))}
-        <p className="text-center m-10">Jesus, I created this website in 10 minutes!</p>
       </footer>
+      <p className="text-center m-10">Jesus, I created this website in 10 minutes!</p>
     </>
   );
 };

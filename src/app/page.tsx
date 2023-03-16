@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <p className=" text-center p-10 mt-32">Welcome!</p>
+      <p className="text-4xl text-center p-10 mt-32">Welcome!</p>
       <Hero />
       <Images />
       <Footer />
