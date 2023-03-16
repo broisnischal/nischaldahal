@@ -35,8 +35,6 @@ export default function Images() {
     return () => {};
   }, []);
 
-  console.log(opened);
-
   return (
     <>
       <h1 className="text-center text-2xl mb-10">Some of My popular Designs</h1>
