@@ -23,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </a>
         ))}
       </footer>
+      <p className="text-center m-10">Jesus, I created this website in 10 minutes!</p>
     </html>
   );
 }
