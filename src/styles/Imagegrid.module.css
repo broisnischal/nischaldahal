@@ -1,0 +1,28 @@
+/* ImageGrid.module.css */
+
+.masonryGrid {
+  display: flex;
+  margin-left: -30px;
+  width: auto;
+}
+
+.masonryGridColumn {
+  background-clip: padding-box;
+  padding-left: 30px;
+  width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .masonryGrid {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .masonryGrid {
+    margin: 0;
+  }
+  .masonryGridColumn {
+    padding-left: 0;
+  }
+}
