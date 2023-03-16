@@ -17,8 +17,7 @@ async function getImages(): Promise<imageArr[]> {
 export default function Images() {
   const breakpointColumnsObj = {
     default: 3,
-    1100: 2,
-    800: 3,
+    // 800: 3,
   };
 
   const [data, setData] = useState<imageArr[]>([]);
@@ -39,50 +38,57 @@ export default function Images() {
   console.log(opened);
 
   return (
-    <div className="w-full flex">
-      <div className="m-auto max-w-screen-lg">
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className={`${styles.masonryGrid}`}
-          columnClassName={styles.masonryGridColumn}
-        >
-          {data?.map((item, index) => {
-            return (
-              <Image
-                className="skeleton mb-5"
-                width={Number(item.width)}
-                height={Number(item.height)}
-                src={`${item.path}`}
-                alt={index.toString()}
-                key={index}
-                onClick={() => {
-                  setPop(true);
-                  setOpened({ ...item });
-                }}
-              ></Image>
-            );
-          })}
+    <>
+      <h1 className="text-center text-2xl mb-10">Some of My popular Designs</h1>
 
-          {pop && (
-            <div className="fixed top-0 left-0 z-80 w-screen h-screen bg-black/70 flex justify-center items-center">
-              <button
+      <div
+        className="w-full flex bg-gray-50 py-32"
+        onClick={() => {
+          pop && setPop(false);
+        }}
+      >
+        <div className="m-auto max-w-screen-lg">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className={`${styles.masonryGrid}`}
+            columnClassName={styles.masonryGridColumn}
+          >
+            {data?.map((item, index) => {
+              return (
+                <Image
+                  className="skeleton mb-5 rounded-md"
+                  width={Number(item.width)}
+                  height={Number(item.height)}
+                  src={`${item.path}`}
+                  alt={index.toString()}
+                  key={index}
+                  onClick={() => {
+                    setPop(true);
+                    setOpened({ ...item });
+                  }}
+                ></Image>
+              );
+            })}
+
+            {pop && (
+              <div className="fixed top-0 left-0 z-80 w-screen h-screen bg-black/70 flex justify-center items-center">
+                {/* <button
                 onClick={() => {
                   setPop(false);
                 }}
-              >
-                close
-              </button>
-              <Image
-                alt="Opened image"
-                className="w-500 h-500"
-                src={opened?.path as string}
-                height={opened?.height as SafeNumber}
-                width={opened?.width as SafeNumber}
-              ></Image>
-            </div>
-          )}
-        </Masonry>
+              ></button> */}
+                <Image
+                  alt="Opened image"
+                  className="m-10 w-1/2"
+                  src={opened?.path as string}
+                  height={opened?.height as undefined}
+                  width={opened?.width as undefined}
+                ></Image>
+              </div>
+            )}
+          </Masonry>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

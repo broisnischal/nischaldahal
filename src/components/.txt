@@ -1,0 +1,34 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+
+interface Props {
+  message: string;
+}
+
+const TextEffect: React.FC<Props> = ({ message }) => {
+  const [words, setWords] = useState<string[]>([]);
+  const [index, setIndex] = useState<number>(0);
+  const [displayText, setDisplayText] = useState<string>("");
+
+  const speed = [20, 30, 50, 70, 110];
+
+  useEffect(() => {
+    const wordsArray = message.split(" ");
+    setWords(wordsArray);
+  }, [message]);
+
+  useEffect(() => {
+    if (index < words.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText((prev) => prev + words[index] + " ");
+        setIndex((prev) => prev + 1);
+      }, Math.floor(Math.random() * 150));
+      return () => clearTimeout(timeout);
+    }
+  }, [index, words]);
+
+  return <h1>{displayText}</h1>;
+};
+
+export default TextEffect;

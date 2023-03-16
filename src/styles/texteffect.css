@@ -1,0 +1,26 @@
+.text-effect {
+  font-family: monospace;
+  font-size: 1.5rem;
+  padding: 2rem;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+}
+
+.text {
+  border-right: 2px solid #666;
+  padding-right: 10px;
+  animation: typing 1s steps(40) infinite;
+}
+
+.typing {
+  animation: none;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
