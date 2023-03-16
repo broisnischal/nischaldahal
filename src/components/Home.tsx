@@ -12,10 +12,12 @@ const Hero = () => {
   `;
 
   return (
-    <div className="h-full mb-32 mt-12 mx-44">
-      <h1>About Me</h1>
-      <TextEffect className="text-2xl" message={message} summarized={"this is summarized"} />
-    </div>
+    <>
+      <div className="h-full mb-32 mt-12 mx-44">
+        <h1>About Me</h1>
+        <TextEffect className="text-2xl" message={message} summarized={"this is summarized"} />
+      </div>
+    </>
   );
 };
 
