@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import TextEffect from "./Texteffect";
 
@@ -15,7 +14,7 @@ const Hero = () => {
     <>
       <div className="h-full mb-32 mt-12 mx-44">
         <h1>About Me</h1>
-        <TextEffect className="text-2xl" message={message} summarized={"this is summarized"} />
+        <TextEffect className="text-2xl" message={message} />
       </div>
     </>
   );

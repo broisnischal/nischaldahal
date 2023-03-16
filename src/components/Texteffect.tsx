@@ -8,7 +8,6 @@ interface Props {
   minTypingDelay?: number;
   maxTypingDelay?: number;
   className?: string;
-  summarized?: string;
 }
 
 const TextEffect: React.FC<Props> = ({
@@ -17,7 +16,6 @@ const TextEffect: React.FC<Props> = ({
   minTypingDelay = 50,
   maxTypingDelay = 400,
   className,
-  summarized,
 }) => {
   const [words, setWords] = useState<string[]>([]);
   const [index, setIndex] = useState<number>(0);
