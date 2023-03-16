@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <div>
-      <p className="text-4xl text-center p-10">Welcome!</p>
+      <p className="text-4xl text-center p-10 mt-32">Welcome!</p>
       <Hero />
       <Images />
     </div>

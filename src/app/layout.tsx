@@ -6,9 +6,23 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const links: string[] = [
+    "https://dahal-nischal.com.np",
+    "https://nischal-dahal.netlify.app",
+    "http://nees.eu5.net",
+    "http://neeschal.eu5.net",
+    "https://neeswebservices.business.site",
+  ];
   return (
     <html lang="en">
       <body>{children}</body>
+      <footer className="m-32 text-center">
+        {links.map((item, index) => (
+          <a href={item} key={index} target="_blank" className="m-10">
+            {item}
+          </a>
+        ))}
+      </footer>
     </html>
   );
 }
