@@ -14,11 +14,11 @@ const Footer = () => {
   return (
     <>
       <footer className="m-32 text-center">
-        {links.map((item, index) => (
+        {/* {links.map((item, index) => (
           <a href={item} key={index} target="_blank" className="m-10">
             {item}
           </a>
-        ))}
+        ))} */}
         <p className="text-center m-10">Jesus, I created this website in 10 minutes!</p>
       </footer>
     </>
