@@ -13,7 +13,7 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="m-32">
+      <footer className="m-32 text-center">
         {links.map((item, index) => (
           <a href={item} key={index} target="_blank" className="m-10">
             {item}
