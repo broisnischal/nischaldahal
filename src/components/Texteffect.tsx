@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Caret from "./Caret";
 
 interface Props {
   message: string;
@@ -81,7 +82,11 @@ const TextEffect: React.FC<Props> = ({
     }
   }, [thinking, thinkingDelay, index, words]);
 
-  return <p className={className}>{displayText}</p>;
+  return (
+    <div>
+      <span className={className}>{displayText}</span><Caret />
+    </div>
+  );
 };
 
 export default TextEffect;

@@ -2,6 +2,7 @@
 
 import React from "react";
 import TextEffect from "./Texteffect";
+import Caret from "./Caret";
 
 const Hero = () => {
   const message =
