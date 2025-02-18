@@ -1,5 +1,5 @@
-import { Links, Meta, Outlet, Scripts } from "react-router";
 import "#app/tailwind.css";
+import { Links, Meta, Outlet, Scripts } from "react-router";
 
 export default function App() {
   return (
@@ -9,9 +9,6 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="flex flex-col items-center justify-center p-12">
-          <h1 className="text-6xl font-bold ">Hello world!</h1>
-        </div>
         <Outlet />
 
         <Scripts />
