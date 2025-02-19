@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-gray-200;
+
+    @media (prefers-color-scheme: dark) {
+      @apply bg-black text-white;
+    }
+  }
+}

@@ -1,0 +1,126 @@
+---
+title: Dockerizing remix application
+description: How you can dockerize your remix application
+published: 2024-09-06
+meta:
+  title: How to dockerize your remix application
+  author: Nischal Dahal
+  description: How you can dockerize your remix application
+  image: https://nischal-dahal.com.np/resources/og-image?title=dockerize-remix-app&description=docker-remix
+  published: 2024-08-04
+featured: true
+image: https://nischal-dahal.com.np/resources/og-image?title=dockerize-remix-app&description=docker-remix
+tags: [docker, remix, bun]
+keywords:
+  [
+    docker,
+    remix,
+    bun,
+    dockerize,
+    dockerizing,
+    dockerfile,
+    node,
+    js,
+    web,
+    development,
+    guide,
+    tutorial,
+    how-to,
+    devops,
+    cloud,
+    cloud-computing,
+    deployment,
+    server,
+  ]
+readTime: 3
+author: Nischal Dahal
+---
+
+#### Effortlessly Dockerize Your Remix App with Bun
+
+[Remix](https://remix.run) redefines full-stack development with its innovative
+server and browser runtime. By leveraging server-side rendering, lightning-fast
+page loads, and seamless transitions, Remix gives you powerful performance out
+of the box.
+
+In this post, I'll walk you through how to easily dockerize your Remix app using
+[Bun](https://bun.sh) and get it ready for deployment in no time.
+
+---
+
+### Step 1: Crafting Your Dockerfile
+
+Dockerizing your Remix app starts by defining a **Dockerfile**. Here's how you
+can spin up your Remix app in a docker container.
+
+```dockerfile
+# /Dockerfile
+
+# Use Bun's lightweight image as the base
+FROM oven/bun as base
+WORKDIR /app
+ENV NODE_ENV="production"
+
+# Build stage
+FROM base as build
+RUN apt-get update -qq && \
+    apt-get install -y build-essential pkg-config python-is-python3
+
+# Install dependencies
+COPY --link package.json ./
+RUN bun install --ci
+
+# Build the Remix app
+RUN bun run build
+
+# Final stage
+COPY --link . .
+FROM base
+COPY --from=build /app /app
+
+# Expose the port and start the app
+EXPOSE 3000
+CMD ["bun", "run", "start"]
+```
+
+Pro tip: Bun’s performance is unmatched in this context, making it a great
+choice to boost build times and speed up your app.
+
+#### Step 2: Fine-Tuning with .dockerignore
+
+Make sure your image stays lean by ignoring unnecessary files during the build
+process with a .dockerignore file:
+
+```sh
+# .dockerignore
+
+node_modules
+npm-debug.log
+```
+
+#### Step 3: Build, Run, and Push
+
+With your Dockerfile and .dockerignore in place, you’re now ready to build and
+run the container:
+
+```sh
+# Build the Docker image
+docker build -t nischal/bun-app .
+
+# Run the app on port 3000
+docker run -p 3000:3000 nischal/bun-app
+
+```
+
+Once your app is running smoothly, push it to Docker Hub:
+
+```sh
+docker login
+docker push nischal/bun-app
+```
+
+With these steps, you've dockerized your Remix app in style, combining the
+blazing speed of Bun with the flexibility of Docker. Ready to take it further?
+This setup is perfect for deployment on any cloud platform. 🚀
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Z8Z712ZDYP)
