@@ -1,5 +1,7 @@
 import "#app/tailwind.css";
 import { Links, Meta, Outlet, Scripts } from "react-router";
+import Navbar from "./components/common/navbar";
+import Footer from "./components/common/footer";
 
 export default function App() {
   return (
@@ -9,8 +11,9 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <Navbar />
         <Outlet />
-
+        <Footer />
         <Scripts />
       </body>
     </html>
