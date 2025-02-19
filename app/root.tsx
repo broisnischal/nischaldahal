@@ -11,12 +11,12 @@ import {
   useRouteError,
 } from "react-router";
 import type { Route } from "./+types/root";
-import { ThemeSwitch, useTheme } from "./routes/resources/theme-switch";
+import Navbar from "./components/common/navbar";
+import { useTheme } from "./routes/resources/theme-switch";
 import { ClientHintCheck, getHints } from "./utils/client-hints";
 import { getTheme, type Theme } from "./utils/theme.server";
 
 export async function loader({ request }: Route.LoaderArgs) {
-
   return data({
     requestInfo: {
       hints: getHints(request),
@@ -43,17 +43,31 @@ function Document({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="color-scheme" content={theme === 'light' ? 'light' : 'dark'} />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="pagename" content="Nischal Dahal" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <Meta />
         <Links />
       </head>
-      <body>
-        <ThemeSwitch userPreference={theme} key={theme} />
-        {children}
-        <ScrollRestoration />
+      <body className="">
+        <Layout>
+          <Navbar theme={theme} />
+          {children}
+        </Layout>
+        <ScrollRestoration getKey={location => {
+          return location.pathname;
+        }} />
         <Scripts />
       </body>
     </html>
   );
+}
+
+function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="max-w-3xl m-auto py-10 p-4 sm:px-0">
+      {children}
+    </div>)
 }
 
 
@@ -69,6 +83,7 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
+  const theme = useTheme()
   const error: any = useRouteError();
 
   if (isRouteErrorResponse(error)) {
@@ -84,9 +99,13 @@ export function ErrorBoundary() {
 
   return (
     <>
-      <Document>
-        <h1>Error!</h1>
-        <p>{error?.message ?? "Unknown error"}</p>
+      <Document theme={theme}>
+        <Layout>
+
+          <h1 className="text-3xl font-bold">Opps Sorry!</h1>
+          <br />
+          <p>{error?.message ?? "Unknown error"}</p>
+        </Layout>
       </Document>
     </>
   );

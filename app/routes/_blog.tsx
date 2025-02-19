@@ -19,8 +19,8 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   const { code, frontmatter } = loaderData;
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
-    <div className="py-12 max-w-3xl m-auto flex flex-col gap-4">
-      <h1 className="dark:text-cyan-400">{frontmatter.title}</h1>
+    <div className="pt-12 pb-32 max-w-3xl m-auto flex flex-col gap-4">
+      <h1 className="dark:text-cyan-400 text-blue-500 font-bold">{frontmatter.title}</h1>
       <Component
         // mdx allow you to customize the components used in the markdown
         // this is optional but in most use cases you want to customize them
@@ -33,7 +33,8 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           ),
           a: (props) => (
             <a
-              style={{ color: "lightblue", textDecoration: "underline" }}
+              style={{ textDecoration: "underline" }}
+              className="text-blue-600 dark:text-cyan-400 hover:underline hover:text-black dark:hover:text-white"
               {...props}
             />
           ),
@@ -53,6 +54,12 @@ export default function Page({ loaderData }: Route.ComponentProps) {
                 border: theme === "dark" ? "1px solid #e0e0e020" : "1px solid #e0e0e0",
               }}
               className="text-sm rounded-xl"
+            />
+          ),
+          img: (props) => (
+            <img
+              {...props}
+              className="rounded-md border border-gray-300/50 dark:border-gray-500/50"
             />
           ),
         }}

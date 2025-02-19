@@ -14,7 +14,8 @@ export async function bundlePost(slug: string, request: Request) {
   const path = `${process.cwd()}/app/contents/${slug}`;
   const theme = getTheme(request)
 
-  let rehypeTheme: RehypeTheme = theme === "dark" ? "github-dark" : "github-light";
+  // github-dark
+  let rehypeTheme: RehypeTheme = theme === "dark" ? "dark-plus" : "min-light";
 
   return await bundleMDX({
     file: `${path}/page.mdx`,

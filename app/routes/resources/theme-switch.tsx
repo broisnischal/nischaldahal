@@ -54,10 +54,11 @@ export function ThemeSwitch({
   const nextMode =
     mode === "system" ? "light" : mode === "light" ? "dark" : "light";
 
+  let size = 20;
   const modeLabel = {
-    light: <Sun />,
-    dark: <Moon />,
-    system: <Monitor />
+    light: <Sun size={size} />,
+    dark: <Moon size={size} />,
+    system: <Monitor size={size} />
   };
 
   return (
@@ -65,6 +66,7 @@ export function ThemeSwitch({
       method="POST"
       {...getFormProps(form)}
       action="/resources/theme-switch"
+      className="h-[20px] aspect-square"
     >
       <ServerOnly>
         {() => (
@@ -73,7 +75,7 @@ export function ThemeSwitch({
       </ServerOnly>
       <input type="hidden" name="theme" value={nextMode} />
       <div>
-        <button className="cursor-pointer" type="submit">{modeLabel[mode]}</button>
+        <button className="cursor-pointer" disabled={fetcher.state !== "idle"} type="submit">{modeLabel[mode]}</button>
       </div>
     </fetcher.Form>
   );

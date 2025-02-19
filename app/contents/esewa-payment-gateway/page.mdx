@@ -1,0 +1,275 @@
+---
+title: Integrating esewa payment gateway | epay
+description:
+  Integrating esewa payment ( epay ) in your application with the practical
+  example and real world demo usecase
+published: 2024-09-11
+meta:
+  title: How to dockerize your remix application
+  author: Nischal Dahal
+  description:
+    Integrating esewa payment ( epay ) in your application with the practical
+    example and real world demo usecase
+  image: https://nischal-dahal.com.np/resources/og-image?title=dockerize-remix-app&description=docker-remix
+  published: 2024-09-11
+featured: true
+image: https://nischal-dahal.com.np/resources/og-image?title=dockerize-remix-app&description=docker-remix
+tags: [esewa, payment, epay]
+keywords: [payment, nepal, payment-gateway-nepal, esewa, epay, khalti]
+readTime: 3
+author: Nischal Dahal
+---
+
+
+Let's Integrate and make payment via esewa. There are few steps to consider when
+using the esewa payment gateway integration which we will demistify in this
+article. Let's start with the practical example,
+[Live_demo](https://api.nischal-dahal.com.np/esewa) and
+[source_code](https://github.com/broisnischal/expense/blob/main/src/api/esewa.tsx),
+and docs are available on [esewa
+developer](https://developer.esewa.com.np/pages/Epay#integration).
+
+## The stack
+
+The entire stack includes the following components:
+
+- Hono.js & Hono JSX Middleware
+- Htmx as the client-side framework.
+- eSewa ( Epay )
+- Drizzle ORM for database interactions.
+- React components for front-end rendering.
+- Tailwind CSS for styling and design
+- Cloudflare D1
+- Cloudflare Workers
+- Bun, Zod and more
+
+### Esewa Test Credential
+
+```
+eSewa ID: 9806800001/2/3/4/5
+Password: Nepal@123 MPIN: 1122 (for application only)
+Token:123456
+```
+
+### Setting up Backend
+
+I won't be going deep in these tech stacks and more on the setup, I will focus
+more on the simple basic route, and in the payment integration flow.
+
+```tsx
+import { Hono } from 'hono';
+import schema from '../drizzle';
+import CryptoJS from 'crypto-js';
+import { drizzle } from 'drizzle-orm/d1';
+import Layout from '../components/layout';
+```
+
+Now, we have imported all the required components.
+
+```tsx
+export const secret = '8gBm/:&EnhH.1/q'; // Secret provided by Esewa
+
+const esewa = new Hono();
+
+// Webhook route for payment verification
+esewa.post('/webhook', async c => {
+	return c.json({ result: 'Payment done' });
+});
+
+// Handle payment failure
+esewa.get('/failure', c =>
+	c.html(
+		<Layout>
+			<h1>Payment Failed</h1>
+			<p>Please try again</p>
+		</Layout>,
+	),
+);
+```
+
+This is the webhook route where you can verify the payment, or do bunch of
+others thing that you like.
+
+```tsx
+// Display the payment form
+esewa.get('/', async c => {
+	const db = drizzle(c.env.DB);
+	const [products] = await db.select().from(schema.products).limit(1);
+	return c.html(<ESewa products={products} />);
+});
+```
+
+here, we have create the main route which will render the payment form, and also
+fetching the single product data from the server and passing it to client, but
+for in your real world scenario you can fetch the actual order data from your
+database.
+
+```tsx
+// Payment verification route
+esewa.get('/verify', async c => {
+	const token = c.req.query('data');
+	if (!token) return c.json({ result: 'Missing token' });
+
+	const decodedData = Buffer.from(token, 'base64').toString('utf-8');
+	const data = JSON.parse(decodedData);
+	const signedFieldNames = data.signed_field_names.split(',');
+
+	const message = signedFieldNames
+		.map(field => `${field}=${data[field]}`)
+		.join(',');
+
+	const hmac = CryptoJS.HmacSHA256(message, secret);
+	const signature = CryptoJS.enc.Base64.stringify(hmac);
+
+	if (signature === data.signature) {
+		return c.html(
+			<Layout>
+				<h1>Payment Success</h1>
+				<span>Transaction ID: {data.transaction_uuid}</span>
+				<span>Status: {data.status}</span>
+			</Layout>,
+		);
+	} else {
+		return c.json({ result: 'Invalid signature' });
+	}
+});
+
+export default esewa;
+```
+
+### How Payment Verification Works
+
+After the user is redirected back to your site (via the /verify route), we check
+the validity of the payment using HMAC signatures. The server verifies the
+payment details against the eSewa signature to ensure no tampering.
+
+Transaction UUID is generated uniquely for each transaction. Signatures are
+created using the product and transaction details, ensuring that data hasn’t
+been modified during the process.
+
+So here is the simple fn for creating the signature.
+
+```tsx
+import CryptoJS from 'crypto-js';
+
+export const createSignature = (data: {
+	amount: number;
+	tax_amount: number;
+	transaction_uuid: string;
+	product_code: string;
+}) => {
+	const secret = '8gBm/:&EnhH.1/q';
+	// total_amount,transaction_uuid,product_code
+	const message = `total_amount=${
+		data.amount + data.tax_amount
+	},transaction_uuid=${data.transaction_uuid},product_code=${
+		data.product_code
+	}`;
+	const hmac = CryptoJS.HmacSHA256(message, secret);
+	const signature = CryptoJS.enc.Base64.stringify(hmac);
+	return signature;
+};
+```
+
+### Client-Side Implementation
+
+On the front end, we’ll render the payment form and submit the necessary data to
+the eSewa API. We will also handle generating the signature required for secure
+transactions.
+
+```tsx
+export default function Esewa({ products }: { products: ProductType }) {
+	const url = 'https://api.nischal-dahal.com.np';
+
+	const transactionUuid = uuidv4();
+	const signature = createSignature({
+		amount: products.price,
+		tax_amount: Math.floor(products.price * 0.1),
+		transaction_uuid: transactionUuid,
+		product_code: 'EPAYTEST',
+	});
+
+	return (
+		<Layout>
+			<div>
+				<br />
+				<h1 className="mb-6 text-2xl font-bold text-green-500">
+					Payment With Esewa
+				</h1>
+
+				<form
+					className="flex w-full max-w-md flex-col gap-4"
+					action="https://rc-epay.esewa.com.np/api/epay/main/v2/form"
+					method="post"
+				>
+					<div className="flex gap-4">
+						<label htmlFor="product-name">Name</label>
+						<h1 id="product-name">{products.name}</h1>
+						<input
+							id="transaction_uuid"
+							name="transaction_uuid"
+							value={transactionUuid}
+						/>
+						<input id="amount" name="amount" value={products.price} />
+						<input
+							id="tax_amount"
+							name="tax_amount"
+							value={Math.floor(products.price * 0.1)}
+						/>
+						<input id="total_amount" name="total_amount" value={110} />
+						<input id="product_code" name="product_code" value="EPAYTEST" />
+						<input
+							id="product_service_charge"
+							name="product_service_charge"
+							value={0}
+						/>
+
+						<input
+							id="product_delivery_charge"
+							name="product_delivery_charge"
+							value={0}
+							readOnly
+						/>
+						<input
+							id="success_url"
+							name="success_url"
+							value={`${url}/esewa/verify`}
+						/>
+
+						<input
+							id="failure_url"
+							name="failure_url"
+							value={`${url}/esewa/failure`}
+						/>
+
+						<input
+							name="signed_field_names"
+							value="total_amount,transaction_uuid,product_code"
+						/>
+
+						<input name="signature" value={signature} />
+					</div>
+					<button type="submit">Submit Payment</button>
+
+					<div id="result"></div>
+				</form>
+			</div>
+			<script type="text/template" id="product-template"></script>
+		</Layout>
+	);
+}
+```
+
+#### Status Check
+
+```
+https://uat.esewa.com.np/api/epay/transaction/status/?product_code=EPAYTEST&total_amount=100&transaction_uuid=123
+```
+
+<br />
+## Conclusion
+
+This blog has demonstrated how to integrate the eSewa payment gateway with a
+modern stack using Hono.js, Axios, and React for front-end rendering. The
+integration handles product display, secure payment processing, and transaction
+verification.

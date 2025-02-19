@@ -1,0 +1,87 @@
+---
+title: How to add google analytics to a Remix / React router
+description: How to add google analytics to a Remix application
+published: 2024-08-09
+meta:
+  title: How to add google analytics to a Remix application
+  author: Nischal Dahal
+  description: How to add google analytics to a Remix application
+  image: https://nischal-dahal.com.np/resources/og-image?title=google-analytics-in-remix&description=google-analytics
+featured: true
+image: https://nischal-dahal.com.np/resources/og-image?title=google-analytics-in-remix&description=google-analytics
+tags: [remix, google-analytics, analytics]
+keywords: [remix, google-analytics, analytics]
+readTime: 10
+author: Nischal Dahal
+---
+
+Integrating Google Analytics into your Remix application allows you to track
+user interactions and gather valuable insights. Here's how you can do it.
+
+#### 1. Get Your Google Analytics Tracking ID
+
+First, sign in to [Google Analytics](https://analytics.google.com/) and create a
+new property if you haven't already. Once created, you'll receive a Tracking ID
+(usually starting with `G-` for GA4).
+
+#### 2. Add Google Analytics Script to Your Root Component
+
+In Remix, you can add the Google Analytics script directly in your `root.tsx` or
+`root.jsx` file. Here's how:
+
+```tsx
+<script
+	dangerouslySetInnerHTML={{
+		__html: ` window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'G-GTAGID');`,
+	}}
+/>
+```
+
+You have to remember that Remix is after all a React Framework and it uses JSX ,
+hence, you need to make use of dangerouslySetInnerHTML
+
+```tsx
+// root.tsx or root.jsx
+
+import { Links, Meta, Outlet, Scripts } from 'react-router';
+
+export default function App() {
+	return (
+		<html lang="en">
+			<head>
+				<Meta />
+				<Links />
+				{/* Google Analytics Script */}
+				<script
+					async
+					src={`https://www.googletagmanager.com/gtag/js?id=ID`}
+				></script>
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+                            gtag('config', 'YOUR_TRACKING_ID', {
+                            page_path: window.location.pathname,
+                            });
+                        `,
+					}}
+				/>
+			</head>
+			<body>
+				<Outlet />
+				<Scripts />
+			</body>
+		</html>
+	);
+}
+```
+
+Add these scripts after \<Meta \/\> and \<Links /\> ; the download of your CSS
+assets has more priority for the First Contentful Paint(FCP), unless you use
+Google Tag Manager to make changes to your site.
