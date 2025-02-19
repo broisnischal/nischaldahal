@@ -1,12 +1,12 @@
+import { listAllArticles } from "#app/.server/content.server.js";
+import { Sitemap } from "#app/modules/sitemap.server.js";
 import { xml } from "remix-utils/responses";
 import type { Route } from "./+types/sitemap[.]xml";
-import { Sitemap } from "#app/modules/sitemap.server.js";
-import { listAllArticles } from "#app/.server/content.server.js";
 
 export async function loader({ request }: Route.LoaderArgs) {
   // @ts-ignore
   // const build = await import('virtual:react-router/server-build');
-  const blogs = await listAllArticles();
+  const blogs = await listAllArticles(request);
 
   const publicRoutes = [
     "/",
