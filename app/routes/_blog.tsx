@@ -52,7 +52,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
                 overflow: "auto",
                 border: theme === "dark" ? "1px solid #e0e0e020" : "1px solid #e0e0e0",
               }}
-              className="text-sm rounded-xl "
+              className="text-sm rounded-xl"
             />
           ),
         }}

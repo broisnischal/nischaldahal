@@ -37,7 +37,7 @@ export async function bundlePost(slug: string, request: Request) {
         ...(options.rehypePlugins ?? []),
         // 👇 you can set your own theme from vscode themes
         [rehypePrettyCode, {
-          theme: rehypeTheme,
+          ...(theme !== null ? { theme: rehypeTheme } : {}),
         }],
         [rehypeAutolinkHeadings, {
           properties: {
