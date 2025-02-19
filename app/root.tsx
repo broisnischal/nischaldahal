@@ -42,6 +42,7 @@ function Document({
         <ClientHintCheck />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content={theme === 'light' ? 'light' : 'dark'} />
         <Meta />
         <Links />
       </head>
@@ -84,7 +85,6 @@ export function ErrorBoundary() {
   return (
     <>
       <Document>
-
         <h1>Error!</h1>
         <p>{error?.message ?? "Unknown error"}</p>
       </Document>

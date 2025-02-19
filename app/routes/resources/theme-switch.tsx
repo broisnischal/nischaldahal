@@ -5,7 +5,7 @@ import { getFormProps, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { invariantResponse } from "@epic-web/invariant";
 import { Monitor, Moon, Sun } from 'lucide-react';
-import { data, redirect, useFetcher, useFetchers } from "react-router";
+import { data, redirect, useFetcher } from "react-router";
 import { ServerOnly } from "remix-utils/server-only";
 import { z } from "zod";
 import type { Route } from "./+types/theme-switch";
@@ -48,8 +48,8 @@ export function ThemeSwitch({
     lastResult: fetcher.data?.result,
   });
 
-  const optimisticMode = useOptimisticThemeMode()
-  const mode = optimisticMode ?? userPreference ?? 'system'
+  // const optimisticMode = useOptimisticThemeMode()
+  const mode = userPreference ?? 'system'
 
   const nextMode =
     mode === "system" ? "light" : mode === "light" ? "dark" : "light";
@@ -73,7 +73,7 @@ export function ThemeSwitch({
       </ServerOnly>
       <input type="hidden" name="theme" value={nextMode} />
       <div>
-        <button type="submit">{modeLabel[mode]}</button>
+        <button className="cursor-pointer" type="submit">{modeLabel[mode]}</button>
       </div>
     </fetcher.Form>
   );
@@ -86,10 +86,10 @@ export function ThemeSwitch({
 export function useTheme() {
   const hints = useHints();
   const requestInfo = useRequestInfo();
-  const optimisticMode = useOptimisticThemeMode();
-  if (optimisticMode) {
-    return optimisticMode === "system" ? hints.theme : optimisticMode;
-  }
+  // const optimisticMode = useOptimisticThemeMode();
+  // if (optimisticMode) {
+  //   return optimisticMode === "system" ? hints.theme : optimisticMode;
+  // }
   return requestInfo.userPrefs.theme ?? hints.theme;
 }
 
@@ -99,21 +99,21 @@ export function useTheme() {
  * If the user's changing their theme mode preference, this will return the
  * value it's being changed to.
  */
-export function useOptimisticThemeMode() {
-  const fetchers = useFetchers();
-  const themeFetcher = fetchers.find(
-    (f) => f.formAction === '/resources/theme-switch'
-  );
+// export function useOptimisticThemeMode() {
+//   const fetchers = useFetchers();
+//   const themeFetcher = fetchers.find(
+//     (f) => f.formAction === '/resources/theme-switch'
+//   );
 
-  if (themeFetcher && themeFetcher.formData) {
-    const submission = parseWithZod(themeFetcher.formData, {
-      schema: ThemeFormSchema,
-    });
+//   if (themeFetcher && themeFetcher.formData) {
+//     const submission = parseWithZod(themeFetcher.formData, {
+//       schema: ThemeFormSchema,
+//     });
 
-    if (submission.status === 'success') {
-      return submission.value.theme;
-    }
-  }
+//     if (submission.status === 'success') {
+//       return submission.value.theme;
+//     }
+//   }
 
-  return null
-}
+//   return null
+// }
