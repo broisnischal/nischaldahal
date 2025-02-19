@@ -4,7 +4,6 @@
   "description": "Portfolio of Nischal Dahal",
   "main": "index.js",
   "type": "module",
-  "packageManager": "bun@1.2.2",
   "imports": {
     "#*": "./*"
   },
