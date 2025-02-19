@@ -23,12 +23,13 @@ export function ClientHintCheck() {
   );
 }
 
-export const { getHints, getClientHintCheckScript } = hintsUtils;
 
 /**
  * @returns an object with the client hints and their values
- */
+*/
 export function useHints() {
   const requestInfo = useRequestInfo();
   return requestInfo.hints;
 }
+
+export const { getHints, getClientHintCheckScript } = hintsUtils;

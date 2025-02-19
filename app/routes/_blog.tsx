@@ -16,8 +16,8 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   const { code, frontmatter } = loaderData;
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
-    <div className="p-12 max-w-3xl m-auto flex flex-col gap-2">
-      <h1 className="text-cyan-400">{frontmatter.title}</h1>
+    <div className="py-12 max-w-3xl m-auto flex flex-col gap-4">
+      <h1 className="dark:text-cyan-400">{frontmatter.title}</h1>
       <Component
         // mdx allow you to customize the components used in the markdown
         // this is optional but in most use cases you want to customize them
@@ -48,7 +48,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
                 padding: "12px",
                 overflow: "auto",
               }}
-              className="border rounded-xl border-red-400 dark:border-gray-200/10"
+              className="border text-sm dark:bg-black/10 rounded-xl border-red-400 dark:border-gray-200/10"
             />
           ),
         }}

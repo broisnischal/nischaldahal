@@ -1,4 +1,5 @@
 import "#app/tailwind.css";
+import clsx from "clsx";
 import {
   data,
   Links,
@@ -7,12 +8,13 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import { ClientHintCheck, getHints } from "./utils/client-hints";
 import type { Route } from "./+types/root";
+import { useTheme } from "./routes/resources/theme-switch";
+import { ClientHintCheck, getHints } from "./utils/client-hints";
 import { getTheme, type Theme } from "./utils/theme.server";
-import { ThemeSwitch, useTheme } from "./routes/resources/theme-switch";
 
 export async function loader({ request }: Route.LoaderArgs) {
+
   return data({
     requestInfo: {
       hints: getHints(request),
@@ -41,7 +43,7 @@ function Document({
   theme?: Theme;
 }) {
   return (
-    <html lang="en" className={theme}>
+    <html lang="en" className={clsx(theme)} data-theme={theme}>
       <head>
         <ClientHintCheck />
         <meta charSet="utf-8" />
@@ -51,7 +53,6 @@ function Document({
       </head>
       <body>
         {children}
-        <ThemeSwitch userPreference={"dark"} />
         <ScrollRestoration />
         <Scripts />
       </body>

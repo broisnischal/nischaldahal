@@ -7,4 +7,7 @@ export default defineConfig({
     reactRouter(),
     tailwind(),
   ],
+  server: {
+    allowedHosts: ['.snehaa.store']
+  }
 });

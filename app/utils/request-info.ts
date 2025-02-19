@@ -1,6 +1,6 @@
+import { type loader as rootLoader } from "#app/root.js";
 import { invariant } from "@epic-web/invariant";
 import { useRouteLoaderData } from "react-router";
-import { type loader as rootLoader } from "#app/root.js";
 
 /**
  * @returns the request info from the root loader
@@ -10,4 +10,4 @@ export function useRequestInfo() {
   invariant(data?.requestInfo, "No requestInfo found in root loader");
 
   return data.requestInfo;
-}
+} 

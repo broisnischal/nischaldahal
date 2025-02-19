@@ -1,11 +1,25 @@
 @import "tailwindcss";
 
 @layer base {
-  body {
-    @apply bg-gray-200;
+  :root {
+    --background: 220 14% 96%;
+    --foreground: 220 9% 7%;
+  }
 
-    /* @media (prefers-color-scheme: dark) {
-      @apply bg-black text-white;
-    } */
+  [data-theme="dark"] {
+    --background: 220 9% 7%;
+    --foreground: 220 14% 96%;
+  }
+
+  body {
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))];
+  }
+
+  @media screen and (prefers-color-scheme: dark) {
+    :root {
+      --background: 220 9% 7%;
+      --foreground: 220 14% 96%;
+    }
   }
 }
+ 
