@@ -1,8 +1,8 @@
-import { setTheme, type Theme } from "#app/utils/theme.server.js";
-import { useForm, getFormProps } from "@conform-to/react";
-import { data, redirect, useFetcher } from "react-router";
-import { useRequestInfo } from "#app/utils/request-info.js";
 import { useHints } from "#app/utils/client-hints.tsx";
+import { useRequestInfo } from "#app/utils/request-info.js";
+import { setTheme, type Theme } from "#app/utils/theme.server.js";
+import { getFormProps, useForm } from "@conform-to/react";
+import { data, redirect, useFetcher } from "react-router";
 
 import { parseWithZod } from "@conform-to/zod";
 import { invariantResponse } from "@epic-web/invariant";
@@ -49,6 +49,7 @@ export function ThemeSwitch({
 
   const nextMode =
     mode === "system" ? "light" : mode === "light" ? "dark" : "system";
+
   const modeLabel = {
     light: <span className="">Light</span>,
     dark: <span className="">Dark</span>,

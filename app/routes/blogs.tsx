@@ -1,5 +1,5 @@
 import { listAllArticles } from "#app/.server/content.server.js";
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
 import type { Route } from "./+types/blogs";
 
 export async function loader() {
@@ -13,6 +13,9 @@ export const images = [
 ];
 
 export default function Page({ loaderData }: Route.ComponentProps) {
+
+
+
   return (
     <>
       <div className="p-12 max-w-3xl m-auto">
