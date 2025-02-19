@@ -22,6 +22,8 @@ export default [
   //   route("register", "./auth/register.tsx"),
   // ]),
 
+  route("resources/theme-switch", "routes/resources/theme-switch.tsx"),
+
   ...prefix("api", [
     // index("./concerts/home.tsx"),
     // route(":city", "./concerts/city.tsx"),

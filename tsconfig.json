@@ -12,6 +12,7 @@
   ],
   "compilerOptions": {
     "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
     "types": ["@react-router/node", "vite/client"],
     "rootDirs": [".", "./.react-router/types"]
   }

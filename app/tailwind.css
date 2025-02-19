@@ -4,52 +4,8 @@
   body {
     @apply bg-gray-200;
 
-    @media (prefers-color-scheme: dark) {
+    /* @media (prefers-color-scheme: dark) {
       @apply bg-black text-white;
-    }
+    } */
   }
-}
-
-/* Layout styles for the image grid */
-.image-list > div {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 10px;
-}
-
-.image-list h1 {
-  font-size: 2rem;
-  font-weight: 600;
-}
-
-.image-list img {
-  max-width: 100%;
-  contain: layout;
-}
-
-.image-list p {
-  width: fit-content;
-}
-
-/* Assign transition names to elements during navigation */
-.image-list a.transitioning img {
-  view-transition-name: image-expand;
-}
-
-.image-list a.transitioning p {
-  view-transition-name: image-title;
-}
-
-/* Match transition names from the list view */
-.image-detail h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  width: fit-content;
-  view-transition-name: image-title;
-}
-
-.image-detail img {
-  max-width: 100%;
-  contain: layout;
-  view-transition-name: image-expand;
 }

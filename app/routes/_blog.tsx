@@ -48,7 +48,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
                 padding: "12px",
                 overflow: "auto",
               }}
-              className="border rounded-xl border-gray-200/10"
+              className="border rounded-xl border-red-400 dark:border-gray-200/10"
             />
           ),
         }}
