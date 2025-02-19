@@ -6,8 +6,6 @@ const cookieName = "en_theme";
 
 export function setTheme(theme: Theme | "system") {
 
-  console.log(theme)
-
   if (theme === "system") {
     return cookie.serialize(cookieName, "", { path: "/", maxAge: -1 });
   } else {

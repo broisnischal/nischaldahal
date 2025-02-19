@@ -46,8 +46,8 @@ function Document({
         <Links />
       </head>
       <body>
-        {children}
         <ThemeSwitch userPreference={theme} key={theme} />
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>

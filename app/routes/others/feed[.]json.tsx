@@ -5,7 +5,7 @@ import type { Route } from "./+types/feed[.]json";
 export async function loader({ request, context }: Route.LoaderArgs) {
   const url = new URL(request.url);
 
-  const posts = await listAllArticles();
+  const posts = await listAllArticles(request);
 
   const list = posts.reduce((acc, post) => {
     acc.push({

@@ -2,9 +2,10 @@ import { bundlePost } from "#app/.server/content.server.js";
 import { getMDXComponent } from "mdx-bundler/client/index.js";
 import React from "react";
 import type { Route } from "./+types/_blog";
+import { useTheme } from "./resources/theme-switch";
 
 export async function loader({ request, params }: Route.LoaderArgs) {
-  const data = await bundlePost(params.slug);
+  const data = await bundlePost(params.slug, request);
   return data;
 }
 
@@ -13,6 +14,8 @@ export const meta: Route.MetaFunction = ({ data }) => {
 };
 
 export default function Page({ loaderData }: Route.ComponentProps) {
+  const theme = useTheme()
+
   const { code, frontmatter } = loaderData;
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
@@ -47,8 +50,9 @@ export default function Page({ loaderData }: Route.ComponentProps) {
               style={{
                 padding: "12px",
                 overflow: "auto",
+                border: theme === "dark" ? "1px solid #e0e0e020" : "1px solid #e0e0e0",
               }}
-              className="border text-sm dark:bg-black/10 rounded-xl border-red-400 dark:border-gray-200/10"
+              className="text-sm rounded-xl "
             />
           ),
         }}

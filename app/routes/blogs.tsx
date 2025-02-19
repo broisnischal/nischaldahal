@@ -2,8 +2,8 @@ import { listAllArticles } from "#app/.server/content.server.js";
 import { Link } from "react-router";
 import type { Route } from "./+types/blogs";
 
-export async function loader() {
-  return await listAllArticles();
+export async function loader({ request }: Route.LoaderArgs) {
+  return await listAllArticles(request);
 }
 
 export const images = [

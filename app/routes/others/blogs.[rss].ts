@@ -10,7 +10,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   // let db = database(context.db);
   // let articles = await Article.list({ db });
 
-  let posts = await listAllArticles();
+  let posts = await listAllArticles(request);
 
   let rss = new RSS({
     title: "Blogs by Nischal Dahal",

@@ -114,4 +114,6 @@ export function useOptimisticThemeMode() {
       return submission.value.theme;
     }
   }
+
+  return null
 }

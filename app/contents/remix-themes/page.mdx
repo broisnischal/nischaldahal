@@ -1,0 +1,83 @@
+---
+title:
+  Solving Theme Inconsistencies in React, Remix, NextJS Handling Dark Mode
+description:
+  Learn how to fix theme inconsistencies in your Remix application when
+  switching between light and dark modes. Ensure proper styling with TailwindCSS
+  by using the color-scheme meta tag for seamless user experience.
+published: 2023-08-10
+featured: false
+tags: [theme, theme-problem, lightmode, darkmode, react, remix, nextjs]
+keywords: [theme, theme-problem, lightmode, darkmode, react, remix, nextjs]
+readTime: 20
+---
+
+
+Ok you added you theme, as well but the issue is your style are not working when
+the color theme of system is `light` mode, and then if you change your
+application to dark it might not work properly.
+
+If you haven't used the theme checkout https://tailwindcss.com/docs/dark-mode
+for implementing in your application.
+
+The issue arises because the system's color scheme can interfere with the theme
+you set in your application. When your system is in light mode, and you change
+your application to dark mode, the system's color scheme might override your
+styles if you don't explicitly set the color-scheme meta tag. This meta tag
+ensures that the browser respects your chosen theme, rather than deferring to
+the system's color scheme. Without it, the browser might still apply light mode
+styles, even when your application is set to dark mode, leading to
+inconsistencies in the appearance.
+
+```tsx
+<meta name="color-scheme" content={theme === 'light' ? 'light' : 'dark'} />
+```
+
+You explicitly inform the browser which color scheme to use, preventing the
+system theme from interfering with your app's theme settings.
+
+```tsx
+export async function loader({ request, context }: LoaderFunctionArgs) {
+	const { getTheme } = await themeSessionResolver(request);
+
+	return defer({
+		theme: getTheme(),
+	});
+}
+```
+
+Now let's implement the app component,
+
+```tsx
+export function App() {
+	const data = useLoaderData<typeof loader>();
+	const [theme] = useTheme();
+
+	return (
+		<html lang="en" className={clsx(theme)}>
+			<head>
+				<meta charSet="UTF-8" />
+				<Meta />
+				<Links />
+				<PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
+			</head>
+			<body>
+				<Outlet />
+				<ScrollToTopButton />
+				<Scripts />
+			</body>
+		</html>
+	);
+}
+```
+
+If you do so, it won't work properly, like if you are in the light mode and you
+change the theme to dark, your styling will not be working properly. To resolve
+this issue you need to use the meta tag of color-scheme.
+
+```tsx
+<meta name="color-scheme" content={theme === 'light' ? 'light' : 'dark'} />
+```
+
+You can also checkout https://ui.shadcn.com/docs/dark-mode/remix if you are
+using shadcn ui in your application.
