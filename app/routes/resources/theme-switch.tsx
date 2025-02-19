@@ -2,10 +2,11 @@ import { useHints } from "#app/utils/client-hints.tsx";
 import { useRequestInfo } from "#app/utils/request-info.js";
 import { setTheme, type Theme } from "#app/utils/theme.server.js";
 import { getFormProps, useForm } from "@conform-to/react";
-import { data, redirect, useFetcher } from "react-router";
-
 import { parseWithZod } from "@conform-to/zod";
 import { invariantResponse } from "@epic-web/invariant";
+import { Monitor, Moon, Sun } from 'lucide-react';
+import { data, redirect, useFetcher, useFetchers } from "react-router";
+import { ServerOnly } from "remix-utils/server-only";
 import { z } from "zod";
 import type { Route } from "./+types/theme-switch";
 
@@ -26,6 +27,7 @@ export async function action({ request }: Route.ActionArgs) {
   const responseInit = {
     headers: { "set-cookie": setTheme(theme) },
   };
+
   if (redirectTo) {
     return redirect(redirectTo, responseInit);
   } else {
@@ -39,21 +41,23 @@ export function ThemeSwitch({
   userPreference?: Theme | null;
 }) {
   const fetcher = useFetcher();
+  const requestInfo = useRequestInfo();
 
   const [form] = useForm({
     id: "theme-switch",
     lastResult: fetcher.data?.result,
   });
 
-  const mode = userPreference ?? "system";
+  const optimisticMode = useOptimisticThemeMode()
+  const mode = optimisticMode ?? userPreference ?? 'system'
 
   const nextMode =
-    mode === "system" ? "light" : mode === "light" ? "dark" : "system";
+    mode === "system" ? "light" : mode === "light" ? "dark" : "light";
 
   const modeLabel = {
-    light: <span className="">Light</span>,
-    dark: <span className="">Dark</span>,
-    system: <span className="">System</span>,
+    light: <Sun />,
+    dark: <Moon />,
+    system: <Monitor />
   };
 
   return (
@@ -62,6 +66,11 @@ export function ThemeSwitch({
       {...getFormProps(form)}
       action="/resources/theme-switch"
     >
+      <ServerOnly>
+        {() => (
+          <input type="hidden" name="redirectTo" value={requestInfo.path} />
+        )}
+      </ServerOnly>
       <input type="hidden" name="theme" value={nextMode} />
       <div>
         <button type="submit">{modeLabel[mode]}</button>
@@ -77,9 +86,32 @@ export function ThemeSwitch({
 export function useTheme() {
   const hints = useHints();
   const requestInfo = useRequestInfo();
-  // const optimisticMode = useOptimisticThemeMode();
-  // if (optimisticMode) {
-  //   return optimisticMode === "system" ? hints.theme : optimisticMode;
-  // }
-  return requestInfo.hints.theme ?? hints.theme;
+  const optimisticMode = useOptimisticThemeMode();
+  if (optimisticMode) {
+    return optimisticMode === "system" ? hints.theme : optimisticMode;
+  }
+  return requestInfo.userPrefs.theme ?? hints.theme;
+}
+
+
+
+/**
+ * If the user's changing their theme mode preference, this will return the
+ * value it's being changed to.
+ */
+export function useOptimisticThemeMode() {
+  const fetchers = useFetchers();
+  const themeFetcher = fetchers.find(
+    (f) => f.formAction === '/resources/theme-switch'
+  );
+
+  if (themeFetcher && themeFetcher.formData) {
+    const submission = parseWithZod(themeFetcher.formData, {
+      schema: ThemeFormSchema,
+    });
+
+    if (submission.status === 'success') {
+      return submission.value.theme;
+    }
+  }
 }

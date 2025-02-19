@@ -2,14 +2,16 @@ import "#app/tailwind.css";
 import clsx from "clsx";
 import {
   data,
+  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteError,
 } from "react-router";
 import type { Route } from "./+types/root";
-import { useTheme } from "./routes/resources/theme-switch";
+import { ThemeSwitch, useTheme } from "./routes/resources/theme-switch";
 import { ClientHintCheck, getHints } from "./utils/client-hints";
 import { getTheme, type Theme } from "./utils/theme.server";
 
@@ -18,22 +20,14 @@ export async function loader({ request }: Route.LoaderArgs) {
   return data({
     requestInfo: {
       hints: getHints(request),
-    },
-    userPrefs: {
-      theme: getTheme(request),
+      path: new URL(request.url).pathname,
+      userPrefs: {
+        theme: getTheme(request),
+      },
     },
   });
 }
 
-export default function App() {
-  const theme = useTheme();
-
-  return (
-    <Document theme={theme}>
-      <Outlet />
-    </Document>
-  );
-}
 
 function Document({
   children,
@@ -53,6 +47,7 @@ function Document({
       </head>
       <body>
         {children}
+        <ThemeSwitch userPreference={theme} key={theme} />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -60,20 +55,40 @@ function Document({
   );
 }
 
-// export default function App() {
-//   return (
-//     <html>
-//       <head>
-//         <ClientHintCheck />
-//         <Meta />
-//         <Links />
-//       </head>
-//       <body>
-//         {/* <Navbar /> */}
-//         <Outlet />
-//         {/* <Footer /> */}
-//         <Scripts />
-//       </body>
-//     </html>
-//   );
-// }
+
+export default function App() {
+  const theme = useTheme()
+
+
+  return (
+    <Document theme={theme}>
+      <Outlet />
+    </Document>
+  );
+}
+
+export function ErrorBoundary() {
+  const error: any = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <>
+        <h1>
+          {error.status} {error.statusText}
+        </h1>
+        <p>{error.data}</p>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Document>
+
+        <h1>Error!</h1>
+        <p>{error?.message ?? "Unknown error"}</p>
+      </Document>
+    </>
+  );
+}
+
