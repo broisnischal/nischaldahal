@@ -1,8 +1,8 @@
-import { bundlePost } from "#app/.server/content.server.js";
 import { getMDXComponent } from "mdx-bundler/client/index.js";
 import React from "react";
 import type { Route } from "./+types/_blog";
 import { useTheme } from "./resources/theme-switch";
+import { bundlePost } from "#app/.server/content.server.ts";
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const data = await bundlePost(params.slug, request);
@@ -14,13 +14,15 @@ export const meta: Route.MetaFunction = ({ data }) => {
 };
 
 export default function Page({ loaderData }: Route.ComponentProps) {
-  const theme = useTheme()
+  const theme = useTheme();
 
   const { code, frontmatter } = loaderData;
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
     <div className="pt-12 pb-32 max-w-3xl m-auto flex flex-col gap-4">
-      <h1 className="dark:text-cyan-400 text-blue-500 font-bold">{frontmatter.title}</h1>
+      <h1 className="dark:text-cyan-400 text-blue-500 font-bold">
+        {frontmatter.title}
+      </h1>
       <Component
         // mdx allow you to customize the components used in the markdown
         // this is optional but in most use cases you want to customize them
@@ -51,7 +53,10 @@ export default function Page({ loaderData }: Route.ComponentProps) {
               style={{
                 padding: "12px",
                 overflow: "auto",
-                border: theme === "dark" ? "1px solid #e0e0e020" : "1px solid #e0e0e0",
+                border:
+                  theme === "dark"
+                    ? "1px solid #e0e0e020"
+                    : "1px solid #e0e0e0",
               }}
               className="text-sm rounded-xl"
             />

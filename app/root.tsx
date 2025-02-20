@@ -13,12 +13,11 @@ import {
 } from "react-router";
 import type { Route } from "./+types/root";
 import Navbar from "./components/common/navbar";
+import { ScriptDangerously } from "./lib/utils";
+import { getPublicEnv } from "./misc/env.common";
 import { useTheme } from "./routes/resources/theme-switch";
 import { ClientHintCheck, getHints } from "./utils/client-hints";
 import { getTheme, type Theme } from "./utils/theme.server";
-import { clientThemeCode } from "./misc/theme-provider";
-import { getPublicEnv } from "./misc/env.common";
-import { ScriptDangerously } from "./lib/utils";
 
 export async function loader({ request }: Route.LoaderArgs) {
   return data({
@@ -45,7 +44,7 @@ function Document({
   return (
     <html lang="en" className={clsx(theme)} data-theme={theme}>
       <head>
-        <ClientHintCheck nonce="" />
+        <ClientHintCheck nonce={new Date().toString()} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta
@@ -102,7 +101,7 @@ export function ErrorBoundary({}: Route.ErrorBoundaryProps) {
         <h1>
           {error.status} {error.statusText}
         </h1>
-        <p>{error.data}</p>
+        <p>{error.data}</p> 
       </>
     );
   }

@@ -2,10 +2,11 @@ import { readdirSync, readFileSync } from "fs";
 import { bundleMDX } from "mdx-bundler";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode, {
-  type Theme as RehypeTheme,
-} from "rehype-pretty-code";
+  type Theme as RehypeTheme, 
+} from "rehype-pretty-code"; 
 import { getTheme } from "../utils/theme.server";
 import matter from "gray-matter";
+
 
 export type Article = {
   title: string;

@@ -1,7 +1,6 @@
 import { listAllArticles, type Article } from "#app/.server/content.server.js";
 import { Link } from "react-router";
 import type { Route } from "./+types/blogs";
-import { ClientOnly } from "remix-utils/client-only";
 
 export async function loader({ request }: Route.LoaderArgs) {
   return listAllArticles(request);
