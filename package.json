@@ -12,8 +12,7 @@
     "build": "react-router build",
     "start": "NODE_ENV=production react-router-serve ./build/server/index.js",
     "ezy": "ezyenv",
-    "prepare": "husky || true",
-    "precommit": "lint-staged"
+    "prepare": "husky || true && husky install"
   },
   "repository": {
     "type": "git",
@@ -80,6 +79,7 @@
     ],
     "**/*.{html,json,css,scss,md,mdx}": [
       "prettier -w"
-    ]
+    ],
+    "*.{js,css,md}": "prettier --write"
   }
 }
