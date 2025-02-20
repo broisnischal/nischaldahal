@@ -88,5 +88,6 @@
       "prettier -w"
     ],
     "*.{js,css,md}": "prettier --write"
-  }
+  },
+  "prettier": "@epic-web/config/prettier"
 }

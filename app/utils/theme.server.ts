@@ -2,7 +2,7 @@ import * as cookie from 'cookie'
 
 export type Theme = 'light' | 'dark'
 
-const cookieName = 'en_theme'
+const cookieName = 'en_theme' // 'CH-prefers-color-scheme'
 
 export function setTheme(theme: Theme | 'system') {
 	if (theme === 'system') {
@@ -12,9 +12,12 @@ export function setTheme(theme: Theme | 'system') {
 	}
 }
 
-export function getTheme(request: Request): Theme | null {
+export function getTheme(request: Request): Theme | 'system' | null {
 	const cookieHeader = request.headers.get('cookie')
-	const parsed = cookieHeader ? cookie.parse(cookieHeader)[cookieName] : 'light'
-	if (parsed === 'light' || parsed === 'dark') return parsed
+	const parsed = cookieHeader
+		? cookie.parse(cookieHeader)[cookieName]
+		: 'system'
+	if (parsed === 'light' || parsed === 'dark' || parsed === 'system')
+		return parsed
 	return null
 }
