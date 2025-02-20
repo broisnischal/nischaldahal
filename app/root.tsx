@@ -52,9 +52,9 @@ function Document({
           name="color-scheme"
           content={theme === "light" ? "light" : "dark"}
         />
-        {/* <meta name="MobileOptimized" content="320" /> */}
+        <meta name="MobileOptimized" content="320" />
         <meta name="pagename" content="Nischal Dahal" />
-        {/* <meta name="mobile-web-app-capable" content="yes" /> */}
+        <meta name="mobile-web-app-capable" content="yes" />
         <Meta />
         <Links />
       </head>
