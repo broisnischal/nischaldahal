@@ -80,6 +80,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return <div className="max-w-3xl m-auto py-10 p-4 sm:px-0">{children}</div>;
 }
 
+/**Root App */
 export default function App({ loaderData }: Route.ComponentProps) {
   const theme = useTheme();
 
