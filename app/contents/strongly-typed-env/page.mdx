@@ -1,0 +1,31 @@
+---
+title: Strongly Typed Environment Variables in React Router
+description: Strongly Typed Environment Variables in React Router
+published: 2025-02-20
+featured: true
+tags: [khalti, payment, nepal, webcheckout]
+keywords: [payment, nepal, payment-gateway-nepal, khalti, epay, khalti]
+readTime: 3
+author: Nischal Dahal
+---
+
+Today we are going to learn, how to create and integrate strongly typed environemnt variable in react router or remix.
+
+```tsx
+import { z } from "zod";
+import { camelKeys, replaceKeys } from "string-ts";
+
+const publicEnvSchema = z.object({
+  GOOGLE_MAPS_API_KEY: z.string(),
+  STRIPE_PUBLIC_KEY: z.string(),
+});
+
+function makeTypedEnv<T>(schema: { parse: (data: unknown) => T }) {
+  return (args: Record<string, unknown>) =>
+    camelKeys(replaceKeys(schema.parse(args), "VITE_", ""));
+}
+
+const getPublicEnv = makeTypedEnv(publicEnvSchema);
+
+export { publicEnvSchema, makeTypedEnv, getPublicEnv };
+```

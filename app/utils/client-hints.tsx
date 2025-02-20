@@ -29,6 +29,7 @@ export function ClientHintCheck({ nonce }: { nonce: string }) {
 
   return (
     <script
+      nonce={nonce}
       dangerouslySetInnerHTML={{
         __html: hintsUtils.getClientHintCheckScript(),
       }}

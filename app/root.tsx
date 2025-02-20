@@ -8,6 +8,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
   useRouteError,
 } from "react-router";
 import type { Route } from "./+types/root";
@@ -16,6 +17,8 @@ import { useTheme } from "./routes/resources/theme-switch";
 import { ClientHintCheck, getHints } from "./utils/client-hints";
 import { getTheme, type Theme } from "./utils/theme.server";
 import { clientThemeCode } from "./misc/theme-provider";
+import { getPublicEnv } from "./misc/env.common";
+import { ScriptDangerously } from "./lib/utils";
 
 export async function loader({ request }: Route.LoaderArgs) {
   return data({
@@ -26,14 +29,17 @@ export async function loader({ request }: Route.LoaderArgs) {
         theme: getTheme(request),
       },
     },
+    publicEnv: getPublicEnv(),
   });
 }
 
 function Document({
   children,
   theme = "light",
+  loaderData,
 }: {
   children: React.ReactNode;
+  loaderData: Route.ComponentProps["loaderData"];
   theme?: Theme;
 }) {
   return (
@@ -63,10 +69,8 @@ function Document({
           }}
         />
         <Scripts />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: clientThemeCode,
-          }}
+        <ScriptDangerously
+          html={`window.PUBLIC_ENV = ${JSON.stringify(loaderData.publicEnv)}`}
         />
       </body>
     </html>
@@ -77,18 +81,19 @@ function Layout({ children }: { children: React.ReactNode }) {
   return <div className="max-w-3xl m-auto py-10 p-4 sm:px-0">{children}</div>;
 }
 
-export default function App() {
+export default function App({ loaderData }: Route.ComponentProps) {
   const theme = useTheme();
 
   return (
-    <Document theme={theme}>
+    <Document loaderData={loaderData} theme={theme}>
       <Outlet />
     </Document>
   );
 }
 
-export function ErrorBoundary() {
+export function ErrorBoundary({}: Route.ErrorBoundaryProps) {
   const theme = useTheme();
+  const loaderDataA = useLoaderData();
   const error: any = useRouteError();
 
   if (isRouteErrorResponse(error)) {
@@ -104,7 +109,7 @@ export function ErrorBoundary() {
 
   return (
     <>
-      <Document theme={theme}>
+      <Document loaderData={loaderDataA} theme={theme}>
         <Layout>
           <h1 className="text-3xl font-bold">Opps Sorry!</h1>
           <br />

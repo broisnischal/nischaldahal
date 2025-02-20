@@ -1,7 +1,7 @@
 import { listAllArticles, type Article } from "#app/.server/content.server.js";
 import { Link } from "react-router";
 import type { Route } from "./+types/blogs";
-import { Suspense, use } from "react";
+import { ClientOnly } from "remix-utils/client-only";
 
 export async function loader({ request }: Route.LoaderArgs) {
   return listAllArticles(request);
@@ -18,7 +18,16 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           open to learning new technologies.
         </p>
 
+        {/* <ClientOnly>
+          {() => {
+            console.log(window.PUBLIC_ENV);
+            return <h1>{window.PUBLIC_ENV?.googleMapsApiKey} </h1>;
+          }}
+        </ClientOnly> */}
+
         <br />
+
+        {/* {getPublicEnv().stripePublicKey} */}
 
         <Blogs data={loaderData} />
 
