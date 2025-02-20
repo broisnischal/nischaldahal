@@ -1,7 +1,7 @@
-import { listAllArticles } from "#app/.server/content.server.js";
+import { listAllArticles, type Article } from "#app/.server/content.server.js";
 import { Link } from "react-router";
 import type { Route } from "./+types/blogs";
-import { use } from "react";
+import { Suspense, use } from "react";
 
 export async function loader({ request }: Route.LoaderArgs) {
   return listAllArticles(request);
@@ -20,19 +20,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 
         <br />
 
-        <ul>
-          {loaderData.map((article) => (
-            <li className="mb-2" key={article.slug}>
-              <Link
-                prefetch="intent"
-                className="text-sm text-blue-600 dark:text-cyan-400 hover:underline hover:text-black dark:hover:text-white"
-                to={`/${article.slug}`}
-              >
-                {article.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <Blogs data={loaderData} />
 
         {/* <div className="image-list">
           <h1>Image List</h1>
@@ -51,5 +39,25 @@ export default function Page({ loaderData }: Route.ComponentProps) {
         </div> */}
       </div>
     </>
+  );
+}
+
+function Blogs({ data }: { data: (Article & { slug: string })[] }) {
+  // let value = use(data);
+
+  return (
+    <ul>
+      {data.map((article) => (
+        <li className="mb-2" key={article.slug}>
+          <Link
+            prefetch="intent"
+            className="text-sm text-blue-600 dark:text-cyan-400 hover:underline hover:text-black dark:hover:text-white"
+            to={`/${article.slug}`}
+          >
+            {article.title}
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }

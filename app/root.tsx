@@ -15,6 +15,7 @@ import Navbar from "./components/common/navbar";
 import { useTheme } from "./routes/resources/theme-switch";
 import { ClientHintCheck, getHints } from "./utils/client-hints";
 import { getTheme, type Theme } from "./utils/theme.server";
+import { clientThemeCode } from "./misc/theme-provider";
 
 export async function loader({ request }: Route.LoaderArgs) {
   return data({
@@ -27,7 +28,6 @@ export async function loader({ request }: Route.LoaderArgs) {
     },
   });
 }
-
 
 function Document({
   children,
@@ -42,7 +42,10 @@ function Document({
         <ClientHintCheck />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content={theme === 'light' ? 'light' : 'dark'} />
+        <meta
+          name="color-scheme"
+          content={theme === "light" ? "light" : "dark"}
+        />
         <meta name="MobileOptimized" content="320" />
         <meta name="pagename" content="Nischal Dahal" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -54,26 +57,28 @@ function Document({
           <Navbar theme={theme} />
           {children}
         </Layout>
-        <ScrollRestoration getKey={location => {
-          return location.pathname;
-        }} />
+        <ScrollRestoration
+          getKey={(location) => {
+            return location.pathname;
+          }}
+        />
         <Scripts />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: clientThemeCode,
+          }}
+        />
       </body>
     </html>
   );
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="max-w-3xl m-auto py-10 p-4 sm:px-0">
-      {children}
-    </div>)
+  return <div className="max-w-3xl m-auto py-10 p-4 sm:px-0">{children}</div>;
 }
 
-
 export default function App() {
-  const theme = useTheme()
-
+  const theme = useTheme();
 
   return (
     <Document theme={theme}>
@@ -83,7 +88,7 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
-  const theme = useTheme()
+  const theme = useTheme();
   const error: any = useRouteError();
 
   if (isRouteErrorResponse(error)) {
@@ -101,7 +106,6 @@ export function ErrorBoundary() {
     <>
       <Document theme={theme}>
         <Layout>
-
           <h1 className="text-3xl font-bold">Opps Sorry!</h1>
           <br />
           <p>{error?.message ?? "Unknown error"}</p>
@@ -110,4 +114,3 @@ export function ErrorBoundary() {
     </>
   );
 }
-
