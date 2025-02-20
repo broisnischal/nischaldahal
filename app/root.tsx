@@ -11,13 +11,13 @@ import {
 	useLoaderData,
 	useRouteError,
 } from 'react-router'
-import { type Route } from './+types/root'
 import Navbar from './components/common/navbar'
 import { PublicEnv, ScriptDangerously } from './lib/utils'
 import { getPublicEnv } from './misc/env.common'
 import { useTheme } from './routes/resources/theme-switch'
 import { ClientHintCheck, getHints } from './utils/client-hints'
 import { getTheme, type Theme } from './utils/theme.server'
+import type { Route } from './+types/root'
 
 export async function loader({ request }: Route.LoaderArgs) {
 	return data({
