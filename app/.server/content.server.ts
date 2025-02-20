@@ -38,7 +38,6 @@ export async function bundlePost(slug: string, request: Request) {
     mdxOptions(options, frontmatter: Article) {
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
-        // 👇 you can set your own theme from vscode themes
         [
           rehypePrettyCode,
           {
