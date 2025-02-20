@@ -12,8 +12,8 @@ import { z } from 'zod'
 // const getArkEnv = makeTypedEnvironment((d) => envArkSchema.assert(d));
 
 const publicEnvSchema = z.object({
-	GOOGLE_MAPS_API_KEY: z.string(),
-	STRIPE_PUBLIC_KEY: z.string(),
+	GOOGLE_MAPS_API_KEY: z.string().optional(),
+	STRIPE_PUBLIC_KEY: z.string().optional(),
 })
 
 const privateEnvSchema = z.object({
