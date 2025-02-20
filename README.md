@@ -1,3 +1,3 @@
 # nischaldahal
 
-A portfolio of nischal Dahal!
+A portfolio of nischal Dahal! 👨🏻‍💻 aka broisnischal
