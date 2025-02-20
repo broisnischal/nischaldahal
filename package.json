@@ -12,7 +12,7 @@
     "build": "react-router build",
     "start": "NODE_ENV=production react-router-serve ./build/server/index.js",
     "ezy": "ezyenv",
-    "prepare": "husky install"
+    "prepare": "husky || true"
   },
   "repository": {
     "type": "git",
