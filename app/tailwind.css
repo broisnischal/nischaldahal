@@ -1,13 +1,15 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *)) (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
- 
-
+  --font-sans:
+    ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
 }
 
 @layer base {
@@ -15,4 +17,28 @@
     font-family: var(--font-sans);
     background-color: var(--color-light-500);
   }
+}
+
+/* remark-alert */
+.alert {
+  @apply p-4 rounded-md m-4;
+}
+
+.alert-note {
+  @apply bg-blue-50 border-l-4 border-blue-500 text-blue-700 p-4 rounded-md 
+         dark:bg-gray-800 dark:border-gray-600 dark:text-blue-400;
+}
+.alert-tip {
+  @apply bg-green-50 border-l-4 border-green-500 text-green-700 p-4 rounded-md 
+         dark:bg-gray-800 dark:border-green-400 dark:text-green-400;
+}
+
+.alert-warning {
+  @apply bg-yellow-50 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md 
+         dark:bg-gray-800 dark:border-yellow-400 dark:text-yellow-400;
+}
+
+.alert-danger {
+  @apply bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md 
+         dark:bg-gray-800/50 dark:border-red-400 dark:text-red-400;
 }

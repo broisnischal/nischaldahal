@@ -1,6 +1,5 @@
 ---
-title:
-  Solving Theme Inconsistencies in React, Remix, NextJS Handling Dark Mode
+title: Solving Theme Inconsistencies in React, Remix, NextJS Handling Dark Mode
 description:
   Learn how to fix theme inconsistencies in your Remix application when
   switching between light and dark modes. Ensure proper styling with TailwindCSS
@@ -12,6 +11,22 @@ keywords: [theme, theme-problem, lightmode, darkmode, react, remix, nextjs]
 readTime: 20
 ---
 
+{/\*
+:::note
+This is an **info** alert.
+:::
+
+:::tip
+This is a **tip** alert.
+:::
+
+:::warning
+This is a **warning** alert.
+:::
+
+:::danger
+This is a **danger** alert.
+::: \*/}
 
 Ok you added you theme, as well but the issue is your style are not working when
 the color theme of system is `light` mode, and then if you change your
@@ -38,11 +53,11 @@ system theme from interfering with your app's theme settings.
 
 ```tsx
 export async function loader({ request, context }: LoaderFunctionArgs) {
-	const { getTheme } = await themeSessionResolver(request);
+  const { getTheme } = await themeSessionResolver(request);
 
-	return defer({
-		theme: getTheme(),
-	});
+  return defer({
+    theme: getTheme(),
+  });
 }
 ```
 
@@ -50,24 +65,24 @@ Now let's implement the app component,
 
 ```tsx
 export function App() {
-	const data = useLoaderData<typeof loader>();
-	const [theme] = useTheme();
+  const data = useLoaderData<typeof loader>();
+  const [theme] = useTheme();
 
-	return (
-		<html lang="en" className={clsx(theme)}>
-			<head>
-				<meta charSet="UTF-8" />
-				<Meta />
-				<Links />
-				<PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
-			</head>
-			<body>
-				<Outlet />
-				<ScrollToTopButton />
-				<Scripts />
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" className={clsx(theme)}>
+      <head>
+        <meta charSet="UTF-8" />
+        <Meta />
+        <Links />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
+      </head>
+      <body>
+        <Outlet />
+        <ScrollToTopButton />
+        <Scripts />
+      </body>
+    </html>
+  );
 }
 ```
 
