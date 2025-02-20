@@ -1,5 +1,6 @@
 import { bundlePost } from '#app/.server/content.server.ts';
 import { getMDXComponent } from 'mdx-bundler/client/index.js';
+import moment from 'moment';
 import React from 'react';
 import type { Route } from './+types/single.ts';
 import { useTheme } from './resources/theme-switch.tsx';
@@ -10,7 +11,10 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 }
 
 export const meta: Route.MetaFunction = ({ data }) => {
-  return [{ title: data.frontmatter.title }];
+  return [{ title: data.frontmatter.title }, {
+    name: "description",
+    content: data.frontmatter.title
+  }];
 };
 
 export default function Page({ loaderData }: Route.ComponentProps) {
@@ -20,9 +24,20 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
     <div className="pt-12 pb-32 max-w-3xl m-auto flex flex-col gap-4">
-      <h1 className="dark:text-cyan-400 text-blue-500 font-bold">
-        {frontmatter.title}
-      </h1>
+
+      <div>
+        <p className='text-sm opacity-90'>
+          {moment(frontmatter.writtenAt).format('MMMM D, YYYY')}
+        </p>
+        <h1 className="dark:!text-white text-blue-600 font-semibold">
+          {frontmatter.title}
+        </h1>
+      </div>
+      {/* 
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        {frontmatter?.description}
+      </p> */}
+
       <Component
         // mdx allow you to customize the components used in the markdown
         // this is optional but in most use cases you want to customize them
@@ -32,6 +47,12 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           ),
           h2: (props) => (
             <h2 style={{ fontSize: '20px', fontWeight: '500' }} {...props} />
+          ),
+          h3: (props) => (
+            <h3 style={{ fontSize: '16px', fontWeight: '500' }} {...props} />
+          ),
+          h4: (props) => (
+            <h4 className='font-bold' {...props} />
           ),
           a: (props) => (
             <a

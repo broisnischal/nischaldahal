@@ -75,7 +75,7 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  return <div className="m-auto max-w-3xl p-4 py-10 sm:px-0">{children}</div>;
+  return <div className="m-auto max-w-2xl p-4 py-10 sm:px-0">{children}</div>;
 }
 
 /**Root App */
@@ -89,7 +89,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export function ErrorBoundary({}: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({ }: Route.ErrorBoundaryProps) {
   const theme = useTheme();
   const loaderDataA = useLoaderData();
   const error: any = useRouteError();

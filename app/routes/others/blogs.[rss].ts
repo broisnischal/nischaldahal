@@ -1,7 +1,9 @@
 import { listAllArticles } from "#app/.server/content.server.js";
 import { RSS } from "#app/modules/rss.server.js";
+// import { escape } from 'lodash';
 import { xml } from "remix-utils/responses";
 import type { Route } from "./+types/blogs.[rss]";
+
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   // void new Logger(context).http(request);
@@ -20,11 +22,11 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
   for (let article of posts) {
     // let link = new URL(`/blog/${article.slug}`, ).toString();
-    let link = `${url.host}/blog/${article.slug}`;
+    let link = `${url.host}/${article.slug}`;
     rss.addItem({
       guid: article.slug,
       title: article.slug.replace(/-/g, " "),
-      description: `${article.title}\n<a href="${link}">Read it on the web</a>`,
+      description: `${article?.slug}`,
       link,
       pubDate: new Date(article.writtenAt).toUTCString(),
     });

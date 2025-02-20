@@ -3,14 +3,17 @@ import { Link } from 'react-router';
 import type { Route } from './+types';
 
 export async function loader({ request }: Route.LoaderArgs) {
-  return listAllArticles(request);
+  return {
+    posts: await listAllArticles(request),
+    url: new URL(request.url),
+  };
 }
 
 export default function Page({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <div className="py-12 max-w-3xl m-auto ">
-        <p className="tracking-wide">
+        <p className="tracking-wide text-balance">
           I'm <strong>Nischal Dahal</strong>, self-started software developer
           focusing on serverless architecture, android development, user
           experience, and product development. I am not Stack biased and always
@@ -28,7 +31,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 
         {/* {getPublicEnv().stripePublicKey} */}
 
-        <Blogs data={loaderData} />
+        <Blogs data={loaderData.posts} url={loaderData.url.toString()} />
 
         {/* <div className="image-list">
           <h1>Image List</h1>
@@ -50,22 +53,27 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function Blogs({ data }: { data: (Article & { slug: string })[] }) {
+function Blogs({ data, url }: { data: (Article & { slug: string })[], url: string }) {
   // let value = use(data);
 
   return (
-    <ul>
-      {data.map((article) => (
-        <li className="mb-2" key={article.slug}>
-          <Link
-            prefetch="intent"
-            className="text-sm text-blue-600 dark:text-cyan-400 hover:underline hover:text-black dark:hover:text-white"
-            to={`/${article.slug}`}
-          >
-            {article.title}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div>
+
+      <p className='text-zinc-600 dark:text-zinc-400'>Subscribe to my articles using <a className='underline' href={url + 'rss'} >RSS</a>.</p>
+      <br />
+      <ul>
+        {data.map((article) => (
+          <li className="mb-2" key={article.slug}>
+            <Link
+              prefetch="intent"
+              className="text-sm text-blue-600 dark:!text-blue-400 hover:underline hover:text-black dark:hover:text-white"
+              to={`/${article.slug}`}
+            >
+              {article.title}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
