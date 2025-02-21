@@ -10,6 +10,9 @@ export default [
   route(':slug', 'routes/single.tsx'),
   route('image/:id', 'routes/image-details.tsx'),
 
+  // Pages
+  route('life', 'routes/r/life.tsx'),
+
   // Others
   route('robots.txt', 'routes/others/[robots.txt].tsx'),
   route('sitemap.xml', 'routes/others/sitemap[.]xml.tsx'),

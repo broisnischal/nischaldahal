@@ -54,7 +54,7 @@ export function ThemeSwitch({
 	const nextMode =
 		mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'light'
 
-	let size = 20
+	let size = 16
 	const modeLabel = {
 		light: <Sun size={size} />,
 		dark: <Moon size={size} />,

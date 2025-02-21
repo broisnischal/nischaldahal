@@ -12,6 +12,7 @@ import {
   useRouteError,
 } from 'react-router';
 import type { Route } from './+types/root';
+import Footer from './components/common/footer';
 import Navbar from './components/common/navbar';
 import { PublicEnv } from './lib/utils';
 import { getPublicEnv } from './misc/env.common';
@@ -61,6 +62,7 @@ function Document({
         <Layout>
           <Navbar theme={theme} />
           {children}
+          <Footer />
         </Layout>
         <ScrollRestoration
           getKey={(location) => {
@@ -89,7 +91,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export function ErrorBoundary({}: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({ }: Route.ErrorBoundaryProps) {
   const theme = useTheme();
   const loaderDataA = useLoaderData();
   const error: any = useRouteError();

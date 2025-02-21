@@ -8,6 +8,8 @@ import rehypePrettyCode, {
 } from 'rehype-pretty-code';
 import { getTheme } from '../utils/theme.server';
 
+
+
 // Rehype & Remark
 import rehypeExternalLinks from 'rehype-external-links';
 import remarkDirective from 'remark-directive';
@@ -24,7 +26,7 @@ export type Article = {
 };
 
 export async function bundlePost(slug: string, request: Request) {
-  const path = `${process.cwd()}/app/contents/${slug}`;
+  const path = `${process.cwd()}/contents/${slug}`;
   const theme = getTheme(request);
 
   // github-dark
@@ -71,7 +73,6 @@ export async function bundlePost(slug: string, request: Request) {
         ],
         rehypeKatex, // Math support
       ];
-
       options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
         remarkDirective,
@@ -85,7 +86,12 @@ export async function bundlePost(slug: string, request: Request) {
             heading: 'Table of Contents',
           },
         ],
+        // MarkdownItGitHubAlerts
       ];
+
+      options.compact = true;
+
+
 
       return options;
     },
@@ -114,7 +120,7 @@ export async function listAllArticles(request: Request) {
 
 function getArticleMetadata(slug: string): Article {
   const fileContent = readFileSync(
-    `${process.cwd()}/app/contents/${slug}/page.mdx`,
+    `${process.cwd()}/contents/${slug}/page.mdx`,
     'utf-8',
   );
   const { data } = matter(fileContent);
@@ -122,7 +128,7 @@ function getArticleMetadata(slug: string): Article {
 }
 
 export function getAllArticlesSlug() {
-  return readdirSync(`${process.cwd()}/app/contents`);
+  return readdirSync(`${process.cwd()}/contents`);
 }
 
 function remarkAlerts() {

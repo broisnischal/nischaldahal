@@ -1,8 +1,10 @@
 import { listAllArticles, type Article } from '#app/.server/content.server.js';
+import { CommonLayout } from '#app/components/ui/common_layout.tsx';
 import { Link } from 'react-router';
 import type { Route } from './+types';
-import { ClipboardCheck, Clipboard } from 'lucide-react';
-import { useState } from 'react';
+
+
+
 
 export async function loader({ request }: Route.LoaderArgs) {
   return {
@@ -11,12 +13,37 @@ export async function loader({ request }: Route.LoaderArgs) {
   };
 }
 
+
+export const meta: Route.MetaFunction = ({ data, location }) => {
+  return [
+    { title: "Nischal Dahal - aka broisnischal" },
+    {
+      name: "description",
+      content: "self-started software developer focusing on serverless architecture, android development, user experience, and product development. I am not Stack biased and always open to learning new technologies, list of articles wrote by @broisnees.",
+    },
+    {
+      "script:ld+json": JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Nischal Dahal",
+        sameAs: [
+          "https://github.com/broisnischal",
+          "https://twitter.com/broisnees",
+          "https://www.linkedin.com/in/nischalxdahal/",
+          "https://t.me/broisnees",
+          "https://instagram.com/broisnischal",
+        ],
+      })
+    }
+  ];
+};
+
 export default function Page({ loaderData }: Route.ComponentProps) {
   const command = 'npx ezyenv';
 
   return (
     <>
-      <div className="py-12 min-w-2xl m-auto ">
+      <CommonLayout>
         <p className="tracking-wide text-balance">
           I am <strong>Nischal Dahal</strong>, self-started software developer
           focusing on serverless architecture, android development, user
@@ -52,7 +79,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
             ))}
           </div>
         </div> */}
-      </div>
+      </CommonLayout>
     </>
   );
 }
@@ -68,7 +95,7 @@ function Blogs({
 
   return (
     <div>
-      <p className="text-zinc-600 dark:text-zinc-400 mb-2">
+      <p className="text-zinc-700 dark:text-zinc-50 mb-2">
         Subscribe to my articles using{' '}
         <a className="underline" href={url + 'rss'}>
           RSS
@@ -82,7 +109,7 @@ function Blogs({
               viewTransition
               state={{ back: url }}
               prefetch="intent"
-              className="text-sm text-blue-600 dark:!text-blue-400 hover:underline hover:text-black dark:hover:text-white"
+              className="text-sm visited:!text-zinc-500 dark:visited:!text-zinc-300 text-blue-600 dark:!text-blue-400 hover:underline hover:text-black dark:hover:text-white"
               to={`/${article.slug}`}
             >
               {article.title}

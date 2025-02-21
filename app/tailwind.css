@@ -2,6 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *)) (&:where([data-theme=dark], [data-theme=dark] *));
 
+
 @theme {
   --font-sans:
     ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -13,10 +14,21 @@
 }
 
 @layer base {
+  /* @font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/inter-v12-latin-regular.woff2') format('woff2');
+  } */
+   
   html {
-    @apply dark:!bg-[#000000bb] bg-[#f8f8f8];
-    font-family: var(--font-sans);
+    @apply dark:!bg-[#13131376] bg-[#f8f8f8];
+    font-family: var(--font-sans) !important;
     background-color: var(--color-light-500);
+  }
+  a:visited {
+    @apply text-zinc-500 dark:visited:text-zinc-200;
   }
 }
 

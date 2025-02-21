@@ -4,6 +4,15 @@ import { RSS } from "#app/modules/rss.server.js";
 import { xml } from "remix-utils/responses";
 import type { Route } from "./+types/blogs.[rss]";
 
+export const meta: Route.MetaFunction = ({ data }) => {
+  return [
+    { title: "Blogs by Nischal Dahal" },
+    {
+      name: "description",
+      content: "The complete list of articles wrote by @broisnees.",
+    }
+  ];
+};
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   // void new Logger(context).http(request);

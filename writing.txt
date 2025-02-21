@@ -1,0 +1,11 @@
+
+> [!TIP]
+> Just a quick tip, that you can use `> [!TIP]` to create
+> a GitHub-style alert in your README.md like this.
+
+> [!NOTE]
+> Just a quick note, that you can use `> [!NOTE]` to create
+
+:::warning
+This is the example warning.
+:::

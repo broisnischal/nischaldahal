@@ -63,8 +63,8 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           ),
           blockquote: (props) => (
             <blockquote
+              className='bg-zinc-50 dark:bg-zinc-800  !py-2'
               style={{
-                background: 'red',
                 borderLeft: '5px solid lightblue',
                 padding: '0 20px',
               }}

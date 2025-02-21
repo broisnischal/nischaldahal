@@ -1,6 +1,7 @@
 import { ThemeSwitch } from '#app/routes/resources/theme-switch.tsx';
 import type { Theme } from '#app/utils/theme.server.ts';
 import { NavLink } from 'react-router';
+import { twMerge } from 'tailwind-merge';
 
 export default function Navbar({ theme }: { theme: Theme | 'system' }) {
 	return (
@@ -12,19 +13,21 @@ export default function Navbar({ theme }: { theme: Theme | 'system' }) {
 }
 
 
-function LinkItem({
+export function LinkItem({
 	name,
 	to,
 	href,
-	prefetch
+	prefetch,
+	className
 }: {
 	to: string;
 	name: string;
-	href?: string
+	href?: string;
+	className?: string
 	// @ts-expect-error
 	prefetch?: PrefetchBehavior
 }) {
 	return (
-		<NavLink {... { target: href ? '_blank' : '_self' }} {...{ prefetch: prefetch }} className={({ isActive, isPending, isTransitioning }) => isTransitioning ? 'transitioning' : isPending ? 'pending' : isActive ? 'active' : ''} to={href ?? to} > {name}</NavLink >
+		<NavLink {... { target: href ? '_blank' : '_self' }} {...{ prefetch: prefetch }} className={({ isActive, isPending, isTransitioning }) => twMerge(isTransitioning ? 'transitioning' : isPending ? 'pending' : isActive ? 'active' : '', className)} to={href ?? to} > {name}</NavLink >
 	)
 }
