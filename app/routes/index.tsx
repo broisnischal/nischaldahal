@@ -16,7 +16,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <div className="py-12 max-w-3xl m-auto ">
+      <div className="py-12 min-w-2xl m-auto ">
         <p className="tracking-wide text-balance">
           I am <strong>Nischal Dahal</strong>, self-started software developer
           focusing on serverless architecture, android development, user
@@ -68,19 +68,19 @@ function Blogs({
 
   return (
     <div>
-      <p className="text-zinc-600 dark:text-zinc-400">
+      <p className="text-zinc-600 dark:text-zinc-400 mb-2">
         Subscribe to my articles using{' '}
         <a className="underline" href={url + 'rss'}>
           RSS
         </a>
         .
       </p>
-      <br />
       <ul className="list-inside list-disc">
         {data.map((article) => (
           <li className="" key={article.slug}>
             <Link
               viewTransition
+              state={{ back: url }}
               prefetch="intent"
               className="text-sm text-blue-600 dark:!text-blue-400 hover:underline hover:text-black dark:hover:text-white"
               to={`/${article.slug}`}

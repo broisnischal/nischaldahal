@@ -11,10 +11,13 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 }
 
 export const meta: Route.MetaFunction = ({ data }) => {
-  return [{ title: data.frontmatter.title }, {
-    name: "description",
-    content: data.frontmatter.title
-  }];
+  return [
+    { title: data.frontmatter.title },
+    {
+      name: 'description',
+      content: data.frontmatter.title,
+    },
+  ];
 };
 
 export default function Page({ loaderData }: Route.ComponentProps) {
@@ -24,12 +27,11 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
     <div className="pt-12 pb-32 max-w-3xl m-auto flex flex-col gap-4">
-
       <div>
-        <p className='text-sm opacity-90'>
+        <p className="text-sm text-zinc-400 ">
           {moment(frontmatter.writtenAt).format('MMMM D, YYYY')}
         </p>
-        <h1 className="dark:!text-white text-blue-600 font-semibold">
+        <h1 className="dark:!text-white text-xl text-blue-600 font-semibold">
           {frontmatter.title}
         </h1>
       </div>
@@ -51,9 +53,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           h3: (props) => (
             <h3 style={{ fontSize: '16px', fontWeight: '500' }} {...props} />
           ),
-          h4: (props) => (
-            <h4 className='font-bold' {...props} />
-          ),
+          h4: (props) => <h4 className="font-bold" {...props} />,
           a: (props) => (
             <a
               style={{ textDecoration: 'underline' }}
@@ -63,7 +63,11 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           ),
           blockquote: (props) => (
             <blockquote
-              style={{ borderLeft: '5px solid lightblue', padding: '0 20px' }}
+              style={{
+                background: 'red',
+                borderLeft: '5px solid lightblue',
+                padding: '0 20px',
+              }}
               {...props}
             />
           ),
@@ -89,7 +93,20 @@ export default function Page({ loaderData }: Route.ComponentProps) {
               className="rounded-md border border-gray-300/50 dark:border-gray-500/50"
             />
           ),
-          code: (props) => <code {...props} />,
+          code: (props) => {
+            // const content = String(props.children);
+            const isCodeBlock = typeof props.children !== 'object';
+
+            if (isCodeBlock) {
+              return (
+                <code
+                  {...props}
+                  className="text-sm rounded-md mx-1 border border-zinc-200 dark:border-zinc-700/60 bg-zinc-100 px-1 py-[2px] dark:bg-zinc-900"
+                />
+              );
+            }
+            return <code className="" {...props} />;
+          },
           p: (props) => <p {...props} className="" />,
           li: (props) => <li {...props} />,
         }}

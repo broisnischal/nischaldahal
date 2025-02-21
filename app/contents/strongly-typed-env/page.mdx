@@ -15,6 +15,8 @@ let's get started by creating the `env.common.ts` file in misc, or utils folder.
 Let's create the publicSchema using `zod`,
 
 ```tsx
+// env.common.ts
+
 const publicEnvSchema = z.object({
   GOOGLE_MAPS_API_KEY: z.string(),
   STRIPE_PUBLIC_KEY: z.string(),
@@ -24,6 +26,8 @@ const publicEnvSchema = z.object({
 now, let's create the function makeTypedEnv, which will take the schema as an argument, and will return a function, which will take the environment variables as an argument, and will return the strongly typed environment variables.
 
 ```tsx
+// env.common.ts
+
 function makeTypedEnv<T>(schema: { parse: (data: unknown) => T }) {
   return (args: Record<string, unknown>) => camelKeys(schema.parse(args));
 }
@@ -32,6 +36,8 @@ function makeTypedEnv<T>(schema: { parse: (data: unknown) => T }) {
 Let's create the publicEnvExpose function, and `getPublicEnvFrom` function,
 
 ```tsx
+// env.common.ts
+
 export function getPublicEnvExpose() {
   if (typeof window == 'undefined') {
     return getPublicEnvFrom(process.env);
@@ -41,7 +47,11 @@ export function getPublicEnvExpose() {
 const getPublicEnvFrom = makeTypedEnv(publicEnvSchema);
 ```
 
+Here, we create the `getPublicEnv` function, which will take the environment variables as an argument, and will return the strongly typed environment variables.
+
 ```tsx
+// env.common.ts
+
 export type PublicEnv = ReturnType<typeof getPublicEnvFrom>;
 export type PrivateEnv = ReturnType<typeof getPrivateEnvFrom>;
 
@@ -59,6 +69,35 @@ function getPublicEnv() {
 
 export { publicEnvSchema, makeTypedEnv, getPublicEnv };
 ```
+
+Let's create the `utils.tsx` file, which will expose the public environment variables to the window object, create `PublicEnv` component which will take the public environment variables as an argument, and will expose the public environment variables to the window object.
+
+```tsx
+// utils.tsx
+
+type Props = ReturnType<typeof getPublicEnvExpose>;
+
+function PublicEnv(props: Props) {
+  return (
+    <script
+      id="public-env"
+      dangerouslySetInnerHTML={{
+        __html: `window.PUBLIC_ENV = ${JSON.stringify(props)};`,
+      }}
+    />
+  );
+}
+
+export { PublicEnv };
+
+declare global {
+  interface Window {
+    PUBLIC_ENV: Props;
+  }
+}
+```
+
+Now, let's add the publicEnv in the `root.tsx`
 
 ```tsx
 // root.tsx
@@ -117,30 +156,7 @@ function Document({
 }
 ```
 
-```tsx
-// utils.tsx
-
-type Props = ReturnType<typeof getPublicEnvExpose>;
-
-function PublicEnv(props: Props) {
-  return (
-    <script
-      id="public-env"
-      dangerouslySetInnerHTML={{
-        __html: `window.PUBLIC_ENV = ${JSON.stringify(props)};`,
-      }}
-    />
-  );
-}
-
-export { PublicEnv };
-
-declare global {
-  interface Window {
-    PUBLIC_ENV: Props;
-  }
-}
-```
+More you can achieve.
 
 ```tsx
 // Define the environment schema using ArkType.
@@ -152,5 +168,3 @@ const envArkSchema = type({
 // // Create the environment parser for ArkType.
 const getArkEnv = makeTypedEnvironment((d) => envArkSchema.assert(d));
 ```
-
-So this article need to be revamped later.
