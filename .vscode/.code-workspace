@@ -1,6 +1,8 @@
 {
   "extensions": {
-    "recommendations": ["mushan.vscode-paste-image"],
+    "recommendations": [
+      "mushan.vscode-paste-image"
+    ],
   },
   "folders": [
     {
