@@ -16,16 +16,16 @@ Let's create the publicSchema using `zod`,
 
 ```tsx
 const publicEnvSchema = z.object({
-	GOOGLE_MAPS_API_KEY: z.string(),
-	STRIPE_PUBLIC_KEY: z.string(),
-})
+  GOOGLE_MAPS_API_KEY: z.string(),
+  STRIPE_PUBLIC_KEY: z.string(),
+});
 ```
 
 now, let's create the function makeTypedEnv, which will take the schema as an argument, and will return a function, which will take the environment variables as an argument, and will return the strongly typed environment variables.
 
 ```tsx
 function makeTypedEnv<T>(schema: { parse: (data: unknown) => T }) {
-	return (args: Record<string, unknown>) => camelKeys(schema.parse(args))
+  return (args: Record<string, unknown>) => camelKeys(schema.parse(args));
 }
 ```
 
@@ -33,113 +33,112 @@ Let's create the publicEnvExpose function, and `getPublicEnvFrom` function,
 
 ```tsx
 export function getPublicEnvExpose() {
-	if (typeof window == 'undefined') {
-		return getPublicEnvFrom(process.env)
-	}
+  if (typeof window == 'undefined') {
+    return getPublicEnvFrom(process.env);
+  }
 }
 
-const getPublicEnvFrom = makeTypedEnv(publicEnvSchema)
+const getPublicEnvFrom = makeTypedEnv(publicEnvSchema);
 ```
 
 ```tsx
-export type PublicEnv = ReturnType<typeof getPublicEnvFrom>
-export type PrivateEnv = ReturnType<typeof getPrivateEnvFrom>
+export type PublicEnv = ReturnType<typeof getPublicEnvFrom>;
+export type PrivateEnv = ReturnType<typeof getPrivateEnvFrom>;
 
 function getPublicEnv() {
-	if (typeof window == 'undefined') {
-		return getPublicEnvFrom(process.env)
-	}
+  if (typeof window == 'undefined') {
+    return getPublicEnvFrom(process.env);
+  }
 
-	if (!window.PUBLIC_ENV) {
-		throw new Error('PUBLIC_ENV is not defined, Not exposed!')
-	}
+  if (!window.PUBLIC_ENV) {
+    throw new Error('PUBLIC_ENV is not defined, Not exposed!');
+  }
 
-	return getPublicEnvFrom(window.PUBLIC_ENV)
+  return getPublicEnvFrom(window.PUBLIC_ENV);
 }
 
-export { publicEnvSchema, makeTypedEnv, getPublicEnv }
+export { publicEnvSchema, makeTypedEnv, getPublicEnv };
 ```
 
 ```tsx
 // root.tsx
 export async function loader({ request }: Route.LoaderArgs) {
-	return data({
-		requestInfo: {
-			hints: getHints(request),
-			path: new URL(request.url).pathname,
-			userPrefs: {
-				theme: getTheme(request),
-			},
-		},
-		publicEnv: getPublicEnv(),
-	})
+  return data({
+    requestInfo: {
+      hints: getHints(request),
+      path: new URL(request.url).pathname,
+      userPrefs: {
+        theme: getTheme(request),
+      },
+    },
+    publicEnv: getPublicEnv(),
+  });
 }
 
 function Document({
-	children,
-	theme = 'light',
-	loaderData,
+  children,
+  theme = 'light',
+  loaderData,
 }: {
-	children: React.ReactNode
-	loaderData: Route.ComponentProps['loaderData']
-	theme?: Theme
+  children: React.ReactNode;
+  loaderData: Route.ComponentProps['loaderData'];
+  theme?: Theme;
 }) {
-	return (
-		<html lang="en" className={clsx(theme)} data-theme={theme}>
-			<head>
-				<ClientHintCheck nonce={new Date().toString()} />
-				<meta charSet="utf-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<meta
-					name="color-scheme"
-					content={theme === 'light' ? 'light' : 'dark'}
-				/>
-				<meta name="MobileOptimized" content="320" />
-				<meta name="pagename" content="Nischal Dahal" />
-				<meta name="mobile-web-app-capable" content="yes" />
-				<Meta />
-				<Links />
-			</head>
-			<body className="">
-				<Layout>
-					<Navbar theme={theme} />
-					{children}
-				</Layout>
-				<ScrollRestoration
-					getKey={(location) => {
-						return location.pathname
-					}}
-				/>
-				<Scripts />
-				<PublicEnv {...loaderData.publicEnv} />
-			</body>
-		</html>
-	)
+  return (
+    <html lang="en" className={clsx(theme)} data-theme={theme}>
+      <head>
+        <ClientHintCheck nonce={new Date().toString()} />
+        <meta charSet="utf-8" />
+        <meta
+          name="color-scheme"
+          content={theme === 'light' ? 'light' : 'dark'}
+        />
+        <meta name="MobileOptimized" content="320" />
+        <meta name="pagename" content="Nischal Dahal" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <Meta />
+        <Links />
+      </head>
+      <body className="">
+        <Layout>
+          <Navbar theme={theme} />
+          {children}
+        </Layout>
+        <ScrollRestoration
+          getKey={(location) => {
+            return location.pathname;
+          }}
+        />
+        <Scripts />
+        <PublicEnv {...loaderData.publicEnv} />
+      </body>
+    </html>
+  );
 }
 ```
 
 ```tsx
 // utils.tsx
 
-type Props = ReturnType<typeof getPublicEnvExpose>
+type Props = ReturnType<typeof getPublicEnvExpose>;
 
 function PublicEnv(props: Props) {
-	return (
-		<script
-			id="public-env"
-			dangerouslySetInnerHTML={{
-				__html: `window.PUBLIC_ENV = ${JSON.stringify(props)};`,
-			}}
-		/>
-	)
+  return (
+    <script
+      id="public-env"
+      dangerouslySetInnerHTML={{
+        __html: `window.PUBLIC_ENV = ${JSON.stringify(props)};`,
+      }}
+    />
+  );
 }
 
-export { PublicEnv }
+export { PublicEnv };
 
 declare global {
-	interface Window {
-		PUBLIC_ENV: Props
-	}
+  interface Window {
+    PUBLIC_ENV: Props;
+  }
 }
 ```
 
@@ -147,11 +146,11 @@ declare global {
 // Define the environment schema using ArkType.
 
 const envArkSchema = type({
-	MODE: ['"development"|"test"|"production"', '=', 'development'],
-})
+  MODE: ['"development"|"test"|"production"', '=', 'development'],
+});
 
 // // Create the environment parser for ArkType.
-const getArkEnv = makeTypedEnvironment((d) => envArkSchema.assert(d))
+const getArkEnv = makeTypedEnvironment((d) => envArkSchema.assert(d));
 ```
 
 So this article need to be revamped later.

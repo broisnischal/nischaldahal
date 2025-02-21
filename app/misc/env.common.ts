@@ -23,8 +23,19 @@ const privateEnvSchema = z.object({
     .default('development'),
 });
 
+// function makeTypedEnv<T>(schema: { parse: (data: unknown) => T }) {
+//   return (args: Record<string, unknown>) => camelKeys(schema.parse(args));
+// }
 function makeTypedEnv<T>(schema: { parse: (data: unknown) => T }) {
-  return (args: Record<string, unknown>) => camelKeys(schema.parse(args));
+  return (args: Record<string, unknown>) => {
+    try {
+      return camelKeys(schema.parse(args));
+    } catch (error: any) {
+      throw new Error(
+        `Missing or invalid environment variable: ${error.message}`,
+      );
+    }
+  };
 }
 
 export function getPublicEnvExpose() {
@@ -34,10 +45,6 @@ export function getPublicEnvExpose() {
 }
 
 const getPublicEnvFrom = makeTypedEnv(publicEnvSchema);
-
-function getPrivateEnv() {
-  return privateEnvSchema.parse(process.env);
-}
 
 const getPrivateEnvFrom = makeTypedEnv(privateEnvSchema);
 
@@ -56,7 +63,11 @@ function getPublicEnv() {
   return getPublicEnvFrom(window.PUBLIC_ENV);
 }
 
-export { getPublicEnv, makeTypedEnv, publicEnvSchema };
+function getPrivateENV() {
+  return getPrivateEnvFrom(process.env);
+}
+
+export { getPublicEnv, getPrivateENV, makeTypedEnv, publicEnvSchema };
 
 declare global {
   namespace NodeJS {

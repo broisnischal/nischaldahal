@@ -1,6 +1,8 @@
 import { listAllArticles, type Article } from '#app/.server/content.server.js';
 import { Link } from 'react-router';
 import type { Route } from './+types';
+import { ClipboardCheck, Clipboard } from 'lucide-react';
+import { useState } from 'react';
 
 export async function loader({ request }: Route.LoaderArgs) {
   return {
@@ -10,11 +12,13 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export default function Page({ loaderData }: Route.ComponentProps) {
+  const command = 'npx ezyenv';
+
   return (
     <>
       <div className="py-12 max-w-3xl m-auto ">
         <p className="tracking-wide text-balance">
-          I'm <strong>Nischal Dahal</strong>, self-started software developer
+          I am <strong>Nischal Dahal</strong>, self-started software developer
           focusing on serverless architecture, android development, user
           experience, and product development. I am not Stack biased and always
           open to learning new technologies.
@@ -53,18 +57,30 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function Blogs({ data, url }: { data: (Article & { slug: string })[], url: string }) {
+function Blogs({
+  data,
+  url,
+}: {
+  data: (Article & { slug: string })[];
+  url: string;
+}) {
   // let value = use(data);
 
   return (
     <div>
-
-      <p className='text-zinc-600 dark:text-zinc-400'>Subscribe to my articles using <a className='underline' href={url + 'rss'} >RSS</a>.</p>
+      <p className="text-zinc-600 dark:text-zinc-400">
+        Subscribe to my articles using{' '}
+        <a className="underline" href={url + 'rss'}>
+          RSS
+        </a>
+        .
+      </p>
       <br />
-      <ul>
+      <ul className="list-inside list-disc">
         {data.map((article) => (
-          <li className="mb-2" key={article.slug}>
+          <li className="" key={article.slug}>
             <Link
+              viewTransition
               prefetch="intent"
               className="text-sm text-blue-600 dark:!text-blue-400 hover:underline hover:text-black dark:hover:text-white"
               to={`/${article.slug}`}

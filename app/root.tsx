@@ -89,7 +89,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
   );
 }
 
-export function ErrorBoundary({ }: Route.ErrorBoundaryProps) {
+export function ErrorBoundary({}: Route.ErrorBoundaryProps) {
   const theme = useTheme();
   const loaderDataA = useLoaderData();
   const error: any = useRouteError();
