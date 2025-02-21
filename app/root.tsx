@@ -14,7 +14,7 @@ import {
 import type { Route } from './+types/root';
 import Footer from './components/common/footer';
 import Navbar from './components/common/navbar';
-import { PublicEnv } from './lib/utils';
+import { PublicEnv, ScriptDangerously } from './lib/utils';
 import { getPublicEnv } from './misc/env.common';
 import { useTheme } from './routes/resources/theme-switch';
 import { ClientHintCheck, getHints } from './utils/client-hints';
@@ -80,6 +80,8 @@ function Document({
         <meta name="MobileOptimized" content="320" />
         <meta name="pagename" content="Nischal Dahal" />
         <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="google-site-verification" content="SAicmvgme7yZ8Zn1YN8znyRQdE6jRbPQ3pz7-aQSjig" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8W9712L3LK"></script>
         <Meta />
         <Links />
       </head>
@@ -95,6 +97,12 @@ function Document({
           }}
         />
         <Scripts />
+        <ScriptDangerously html={`window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'G-8W9712L3LK');`} 
+        />
         <PublicEnv {...loaderData.publicEnv} />
       </body>
     </html>
