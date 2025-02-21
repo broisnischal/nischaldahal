@@ -28,10 +28,10 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   return (
     <div className="pt-12 pb-32 max-w-3xl m-auto flex flex-col gap-4">
       <div>
-        <p className="text-sm text-zinc-400 ">
+        <p className="text-sm text-zinc-500 ">
           {moment(frontmatter.writtenAt).format('MMMM D, YYYY')}
         </p>
-        <h1 className="dark:!text-white text-xl text-blue-600 font-semibold">
+        <h1 className="dark:!text-white text-xl text-blue-700 font-semibold">
           {frontmatter.title}
         </h1>
       </div>

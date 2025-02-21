@@ -9,3 +9,15 @@
 :::warning
 This is the example warning.
 :::
+
+// For toc
+
+import TOC  from '#app/components/ui/toc.tsx';
+
+<TOC>
+- [Testing](#testing)
+- [Creating the strongly typed environment variables](#creating-the-strongly-typed-environment-variables)
+    - [Testing](#cool)
+    - [Testing](#cool)
+- [testing](cool)
+</TOC>

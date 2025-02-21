@@ -15,6 +15,7 @@ import rehypeExternalLinks from 'rehype-external-links';
 import remarkDirective from 'remark-directive';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import remarkSlug from 'remark-slug';
 import remarkSmartypants from 'remark-smartypants';
 import remarkToc from 'remark-toc';
 import { visit } from 'unist-util-visit';
@@ -86,6 +87,16 @@ export async function bundlePost(slug: string, request: Request) {
             heading: 'Table of Contents',
           },
         ],
+        [
+          remarkSlug, {
+            slugify: (s: string) => {
+              return s
+                .toLowerCase()
+                .replace(/[^\w]+/g, '-')
+                .replace(/^-+/, '')
+                .replace(/-+$/, '');
+            },
+          }]
         // MarkdownItGitHubAlerts
       ];
 

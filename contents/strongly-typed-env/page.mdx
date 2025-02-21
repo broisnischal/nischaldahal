@@ -8,6 +8,7 @@ keywords: [payment, nepal, payment-gateway-nepal, khalti, epay, khalti]
 readTime: 3
 author: Nischal Dahal
 --- 
+import TOC  from '#app/components/ui/toc.tsx';
 
 Today we are going to learn, how to create and integrate strongly typed environemnt variable in react router or remix,
 let's get started by creating the `env.common.ts` file in misc, or utils folder.
@@ -71,6 +72,8 @@ export { publicEnvSchema, makeTypedEnv, getPublicEnv };
 ```
 
 Let's create the `utils.tsx` file, which will expose the public environment variables to the window object, create `PublicEnv` component which will take the public environment variables as an argument, and will expose the public environment variables to the window object.
+
+# testing
 
 ```tsx
 // utils.tsx

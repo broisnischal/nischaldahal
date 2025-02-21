@@ -2,8 +2,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *)) (&:where([data-theme=dark], [data-theme=dark] *));
 
-
-@theme {
+@theme { 
   --font-sans:
     ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';
@@ -23,7 +22,7 @@
   } */
    
   html {
-    @apply dark:!bg-[#13131376] bg-[#f8f8f8];
+    @apply dark:!bg-[#13131376] bg-[#f8f8f8] scroll-smooth;
     font-family: var(--font-sans) !important;
     background-color: var(--color-light-500);
   }
@@ -58,4 +57,31 @@
 
 .active {
   @apply underline;
+}
+
+
+/* TOC */
+
+.toc {
+  @apply py-8 text-zinc-600 dark:text-zinc-400 rounded-md;
+}
+
+.toc ul {
+  @apply list-disc px-4;
+}
+
+.toc li {
+  /* @apply  */
+}
+
+.toc a {
+  @apply !no-underline font-[500] hover:!underline hover:text-black dark:hover:text-white;
+}
+
+.toc a:hover {
+  text-decoration: underline;
+}
+
+:target {
+  scroll-margin-top: 80px;
 }

@@ -60,6 +60,7 @@
     "remark-directive": "^3.0.1",
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
+    "remark-slug": "^7.0.1",
     "remark-smartypants": "^3.0.2",
     "remark-toc": "^9.0.0",
     "remix-utils": "^8.1.0",

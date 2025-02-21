@@ -2,5 +2,11 @@
   "pasteImage.path": "${projectRoot}/public/images",
   "pasteImage.basePath": "/images",
   "pasteImage.namePrefix": "${currentFileNameWithoutExt}_",
-  "pasteImage.insertPattern": "![](/images/${imageFileName})"
+  "pasteImage.insertPattern": "![](/images/${imageFileName})",
+  "css.customData": [
+    ".vscode/tailwind.json"
+  ],
+  "files.associations": {
+    "*.css": "tailwindcss",
+  }
 }
