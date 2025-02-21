@@ -13,31 +13,6 @@ export async function loader({ request }: Route.LoaderArgs) {
   };
 }
 
-
-export const meta: Route.MetaFunction = ({ data, location }) => {
-  return [
-    { title: "Nischal Dahal - aka broisnischal" },
-    {
-      name: "description",
-      content: "self-started software developer focusing on serverless architecture, android development, user experience, and product development. I am not Stack biased and always open to learning new technologies, list of articles wrote by @broisnees.",
-    },
-    {
-      "script:ld+json": JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "Person",
-        name: "Nischal Dahal",
-        sameAs: [
-          "https://github.com/broisnischal",
-          "https://twitter.com/broisnees",
-          "https://www.linkedin.com/in/nischalxdahal/",
-          "https://t.me/broisnees",
-          "https://instagram.com/broisnischal",
-        ],
-      })
-    }
-  ];
-};
-
 export default function Page({ loaderData }: Route.ComponentProps) {
   const command = 'npx ezyenv';
 
