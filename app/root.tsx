@@ -19,6 +19,7 @@ import { getPublicEnv } from './misc/env.common';
 import { useTheme } from './routes/resources/theme-switch';
 import { ClientHintCheck, getHints } from './utils/client-hints';
 import { getTheme, type Theme } from './utils/theme.server';
+import ProgessBar from './components/common/progress';
 
 export async function loader({ request }: Route.LoaderArgs) {
   return data({
@@ -87,6 +88,7 @@ function Document({
       </head>
       <body className="">
         <Layout>
+          <ProgessBar/>
           <Navbar theme={theme} />
           {children}
           <Footer />
