@@ -3,6 +3,7 @@ import { useSpinDelay } from 'spin-delay';
 import { useNavigation } from 'react-router';
 import { cn } from '#app/lib/utils.tsx';
 
+// Progress Bar
 export default function ProgessBar() {
 	const navigation = useNavigation();
 	const busy = navigation.state !== 'idle';
