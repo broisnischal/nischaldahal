@@ -20,6 +20,8 @@ import { useTheme } from './routes/resources/theme-switch';
 import { ClientHintCheck, getHints } from './utils/client-hints';
 import { getTheme, type Theme } from './utils/theme.server';
 import ProgessBar from './components/common/progress';
+import { NuqsAdapter } from 'nuqs/adapters/react-router/v7'
+
 
 export async function loader({ request }: Route.LoaderArgs) {
   return data({
@@ -103,7 +105,7 @@ function Document({
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
-              gtag('config', 'G-8W9712L3LK');`} 
+              gtag('config', 'G-8W9712L3LK');`}
         />
         <PublicEnv {...loaderData.publicEnv} />
       </body>
@@ -121,7 +123,9 @@ export default function App({ loaderData }: Route.ComponentProps) {
 
   return (
     <Document loaderData={loaderData} theme={theme}>
-      <Outlet />
+      <NuqsAdapter>
+        <Outlet />
+      </NuqsAdapter>
     </Document>
   );
 }

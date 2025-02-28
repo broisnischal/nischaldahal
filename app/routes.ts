@@ -12,6 +12,7 @@ export default [
 
   // Pages
   route('life', 'routes/r/life.tsx'),
+  route('mail', 'routes/r/mail/index.tsx'),
 
   // Others
   route('robots.txt', 'routes/others/[robots.txt].tsx'),

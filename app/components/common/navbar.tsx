@@ -3,15 +3,25 @@ import type { Theme } from '#app/utils/theme.server.ts';
 import { NavLink } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 
+
+const links = [
+	{ name: 'index', to: '/' },
+	{ name: 'life', to: '/life' },
+	{
+		name: "mail",
+		to: "mail"
+	},
+	 { name: 'github', to: 'github', href: 'https://github.com/broisnischal' }
+]
+
 export default function Navbar({ theme }: { theme: Theme | 'system' }) {
 	return (
 		<div className="m-auto mt-10 flex max-w-3xl flex-row items-center gap-3 self-center">
 			<ThemeSwitch userPreference={theme} key={theme} />
-			{[{ name: 'index', to: '/' }, { name: 'life', to: '/life' }, { name: 'github', to: 'github', href: 'https://github.com/broisnischal' }].map(item => <LinkItem key={item.name} {...item} />)}
+			{links.map(item => <LinkItem key={item.name} {...item} />)}
 		</div>
 	)
 }
-
 
 export function LinkItem({
 	name,

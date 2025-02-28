@@ -35,7 +35,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
           {frontmatter.title}
         </h1>
       </div>
-      {/* 
+      {/*
       <p className="text-sm text-gray-600 dark:text-gray-400">
         {frontmatter?.description}
       </p> */}

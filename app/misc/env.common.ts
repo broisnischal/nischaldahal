@@ -18,6 +18,7 @@ const publicEnvSchema = z.object({
 
 const privateEnvSchema = z.object({
   STRIPE_SECRET_KEY: z.string().optional(),
+  API_URL: z.string(),
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),
@@ -71,6 +72,6 @@ export { getPublicEnv, getPrivateENV, makeTypedEnv, publicEnvSchema };
 
 declare global {
   namespace NodeJS {
-    interface ProcessEnv extends PublicEnv, PrivateEnv {}
+    interface ProcessEnv extends PublicEnv, PrivateEnv { }
   }
 }
