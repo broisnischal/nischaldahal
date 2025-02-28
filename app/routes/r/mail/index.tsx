@@ -187,7 +187,7 @@ function MailItem(mail: Mail) {
             {/* <p><strong>To:</strong> {to}</p> */}
             <p><strong>Subject:</strong> {subject}</p>
             <p><strong>Date:</strong> {new Date(sent_at).toLocaleString()}</p>
-            <p className="whitespace-pre-wrap">{text?.length! > 10 ? text : <p className="whitespace-pre-wrap">{body}</p>}</p>
+            <p className="whitespace-pre-wrap">{text?.length! > 10 ? text : <p className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: body}}></p>}</p>
 
           </div>
         </div>
