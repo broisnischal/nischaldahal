@@ -21,7 +21,7 @@ export default function Navbar({ theme }: { theme: Theme | 'system' }) {
 			{<ClientOnly>
 				{() => {
 					const email = localStorage.getItem('email');
-					return <LinkItem key={email} name="mail" to={`mail?email=${email}`} />
+					return <LinkItem key={email} name="mail" to={email ? `mail?email=${email}` : 'mail'} />
 				}}
 			</ClientOnly>}
 		</div>
