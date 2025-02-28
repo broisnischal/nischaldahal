@@ -142,7 +142,9 @@ export default function Mail({ loaderData }: Route.ComponentProps) {
 function MailItem(mail: Mail) {
   const { from, to, subject, body, sent_at } = mail;
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const { text, html } = extract(body);
+  const { text, html, } = extract(body);
+
+  console.log(body)
 
 
   const openDialog = () => {
@@ -160,6 +162,8 @@ function MailItem(mail: Mail) {
       <p className="text-sm text-gray-500 cursor-pointer">{from}</p>
 
       <p className="text-sm text-gray-500">{new Date(sent_at).toDateString()}</p>
+
+
       <dialog
         ref={dialogRef}
         className="p-10 w-full max-w-2xl m-auto shadow-lg backdrop:bg-black/50"
@@ -179,10 +183,12 @@ function MailItem(mail: Mail) {
           <div className="space-y-2">
             <p><strong>From:</strong> {from}</p>
 
+
             {/* <p><strong>To:</strong> {to}</p> */}
             <p><strong>Subject:</strong> {subject}</p>
             <p><strong>Date:</strong> {new Date(sent_at).toLocaleString()}</p>
-            <p className="whitespace-pre-wrap">{text}</p>
+            <p className="whitespace-pre-wrap">{text?.length! > 10 ? text : <p className="whitespace-pre-wrap">{body}</p>}</p>
+
           </div>
         </div>
       </dialog>
