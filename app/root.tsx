@@ -91,6 +91,7 @@ function Document({
       <body className="">
         <Layout>
           <ProgessBar/>
+
           <Navbar theme={theme} />
           {children}
           <Footer />

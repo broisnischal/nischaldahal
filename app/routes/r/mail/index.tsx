@@ -1,7 +1,7 @@
 import { CommonLayout } from "#app/components/ui/common_layout.tsx";
 import { z } from "zod";
 import { up } from 'up-fetch'
-import { data } from "react-router";
+import { data, useNavigate } from "react-router";
 import type { Route } from "#.react-router/types/app/routes/r/mail/+types/index.ts";
 import { useQueryState, parseAsString } from "nuqs";
 import { useEffect, useRef } from "react";
@@ -78,6 +78,10 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   return data({
     mail
+  }, {
+    headers: {
+      'Set-Cookie': `email=${mail.email}; Path=/; HttpOnly; Secure; SameSite=Strict`
+    }
   })
 
 }
@@ -85,6 +89,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export default function Mail({ loaderData }: Route.ComponentProps) {
   const [email, setEmail] = useQueryState('email', parseAsString);
+  const navigate = useNavigate();
 
   if("mails" in loaderData) {
     return loaderData.mails.length > 0 ? (
@@ -97,19 +102,33 @@ export default function Mail({ loaderData }: Route.ComponentProps) {
       </ClientOnly>
 
 
-    ) : <div className="flex flex-col gap-4 py-10">
+    ) : <div className="flex items-start flex-col gap-4 py-10">
+
+
       <h1 className="text-2xl font-bold">Your inbox is empty!</h1>
       <p className="text-gray-500">
         Reload to receive new emails!
       </p>
+      <button className="text-gray-500 bg-gray-100 px-2 py-1 rounded-md hover:text-gray-700" onClick={() => {
+        localStorage.removeItem('email');
+        setEmail(null);
+      }}>
+        Clear email
+      </button>
+
     </div>
   }
 
   if("mail" in loaderData) {
-    console.log(loaderData)
-
     useEffect(() => {
-      setEmail(loaderData.mail.email);
+      const existingEmail = localStorage.getItem('email');
+      if(existingEmail) {
+        setEmail(existingEmail);
+      } else {
+        setEmail(loaderData.mail.email);
+        navigator.clipboard.writeText(loaderData.mail.email);
+        localStorage.setItem('email', loaderData.mail.email);
+      }
     }, [loaderData.mail.email])
 
     return <MailGenerate email={loaderData.mail.email} />
@@ -125,7 +144,6 @@ function MailItem(mail: Mail) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const { text, html } = extract(body);
 
-  console.log(html)
 
   const openDialog = () => {
     dialogRef.current?.showModal();
@@ -174,11 +192,11 @@ function MailItem(mail: Mail) {
 
 function MailGenerate({ email }: { email: string }) {
   return (
-    <div className="flex flex-col gap-4 py-10">
+    <div className="flex items-start flex-col gap-4 py-10">
       <h1 className="text-2xl font-bold">Email</h1>
       <p className="text-lg">{email}</p>
 
-      <button onClick={() => {
+      <button className="text-gray-500 bg-gray-100 px-2 py-1 rounded-md hover:text-gray-700" onClick={() => {
         navigator.clipboard.writeText(email);
         alert('Email copied to clipboard');
       }}>
