@@ -63,7 +63,7 @@
 /* TOC */
 
 .toc {
-  @apply py-8 text-zinc-600 dark:text-zinc-400 rounded-md;
+  @apply py-8 !text-zinc-600 dark:text-zinc-400 rounded-md;
 }
 
 .toc ul {
@@ -71,11 +71,12 @@
 }
 
 .toc li {
-  /* @apply  */
+  @apply list-disc;
+  /* @apply text-blue-700  dark:text-zinc-400 font-[500] hover:!underline hover:text-black dark:hover:text-white; */
 }
 
 .toc a {
-  @apply !no-underline font-[500] hover:!underline hover:text-black dark:hover:text-white;
+  @apply !no-underline text-blue-700  dark:text-zinc-400 font-[500] hover:!underline hover:text-black dark:hover:text-white;
 }
 
 .toc a:hover {

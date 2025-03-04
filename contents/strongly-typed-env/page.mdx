@@ -9,6 +9,20 @@ readTime: 3
 author: Nischal Dahal
 --- 
 import TOC  from '#app/components/ui/toc.tsx';
+ 
+
+<TOC>
+- [Introduction](#introduction)
+- [Creating the Environment Schema](#creating-the-environment-schema)
+- [Making Type-Safe Environment Helper](#making-type-safe-environment-helper)
+- [Exposing Environment Variables](#exposing-environment-variables)
+- [Getting Environment Variables](#getting-environment-variables)
+- [More you can achieve](#more-you-can-achieve)
+- [Conclusion](#conclusion)
+</TOC>
+
+
+### Introduction
 
 Today we are going to learn, how to create and integrate strongly typed environemnt variable in react router or remix,
 let's get started by creating the `env.common.ts` file in misc, or utils folder.
@@ -35,6 +49,8 @@ function makeTypedEnv<T>(schema: { parse: (data: unknown) => T }) {
 ```
 
 Let's create the publicEnvExpose function, and `getPublicEnvFrom` function,
+
+### Making Type-Safe Environment Helper
 
 ```tsx
 // env.common.ts
@@ -73,7 +89,8 @@ export { publicEnvSchema, makeTypedEnv, getPublicEnv };
 
 Let's create the `utils.tsx` file, which will expose the public environment variables to the window object, create `PublicEnv` component which will take the public environment variables as an argument, and will expose the public environment variables to the window object.
 
-# testing
+### Exposing Environment Variables
+
 
 ```tsx
 // utils.tsx
@@ -101,6 +118,7 @@ declare global {
 ```
 
 Now, let's add the publicEnv in the `root.tsx`
+
 
 ```tsx
 // root.tsx
@@ -159,7 +177,8 @@ function Document({
 }
 ```
 
-More you can achieve.
+### More you can achieve
+
 
 ```tsx
 // Define the environment schema using ArkType.
@@ -171,3 +190,10 @@ const envArkSchema = type({
 // // Create the environment parser for ArkType.
 const getArkEnv = makeTypedEnvironment((d) => envArkSchema.assert(d));
 ```
+
+### Conclusion
+
+In this article, we have learned how to create and integrate strongly typed environemnt variable in react router or remix,
+
+
+
