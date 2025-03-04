@@ -26,7 +26,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   const { code, frontmatter } = loaderData;
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
-    <div className="pt-12 pb-32 max-w-3xl m-auto flex flex-col gap-4">
+    <div className="pt-12 pb-32 m-auto flex flex-col gap-4">
       <div>
         <p className="text-sm text-zinc-500 ">
           {moment(frontmatter.writtenAt).format('MMMM D, YYYY')}

@@ -19,12 +19,11 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <CommonLayout>
-        <p className="tracking-wide text-balance">
-          I am <strong>Nischal Dahal</strong>, self-started software developer
-          focusing on serverless architecture, android development, user
-          experience, and product development. I am not Stack biased and always
-          open to learning new technologies.
-        </p>
+
+        <div>
+          <h1 className="">About me</h1>
+          <p className="text-zinc-500">a system architect 🚀 </p>
+        </div>
 
         {/* <ClientOnly>
           {() => {
@@ -77,14 +76,14 @@ function Blogs({
         </a>
         .
       </p>
-      <ul className="list-inside list-disc">
+      <ul className=" md:list-inside md:list-disc flex flex-col gap-2">
         {data.map((article) => (
           <li className="" key={article.slug}>
             <Link
               viewTransition
               state={{ back: url }}
               prefetch="intent"
-              className="text-sm visited:!text-zinc-500 dark:visited:!text-zinc-300 text-blue-600 dark:!text-blue-400 hover:underline hover:text-black dark:hover:text-white"
+              className=" visited:!text-zinc-500 dark:visited:!text-zinc-300 text-blue-600 dark:!text-blue-400 hover:underline hover:text-black dark:hover:text-white"
               to={`/${article.slug}`}
             >
               {article.title}

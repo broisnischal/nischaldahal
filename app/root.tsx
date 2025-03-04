@@ -115,7 +115,7 @@ function Document({
 }
 
 function Layout({ children }: { children: React.ReactNode }) {
-  return <div className="m-auto max-w-2xl p-4 py-10 sm:px-0">{children}</div>;
+  return <div className="m-auto max-w-4xl p-4 py-0 md:py-10 sm:px-0">{children}</div>;
 }
 
 /**Root App */

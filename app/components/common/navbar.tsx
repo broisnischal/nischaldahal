@@ -15,15 +15,15 @@ export default function Navbar({ theme }: { theme: Theme | 'system' }) {
 
 
 	return (
-		<div className="m-auto mt-10 flex max-w-3xl flex-row items-center gap-3 self-center">
+		<div className="m-auto mt-10 flex flex-row items-center gap-3">
 			<ThemeSwitch userPreference={theme} key={theme} />
 			{links.map(item => <LinkItem key={item.name} {...item} />)}
-			{<ClientOnly>
+			{/* {<ClientOnly>
 				{() => {
 					const email = localStorage.getItem('email');
 					return <LinkItem key={email} name="mail" to={email ? `mail?email=${email}` : 'mail'} />
 				}}
-			</ClientOnly>}
+			</ClientOnly>} */}
 		</div>
 	)
 }
