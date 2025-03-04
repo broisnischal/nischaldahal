@@ -85,11 +85,36 @@ export async function loader({ request }: Route.LoaderArgs) {
   })
 
 }
-
+ 
 
 export default function Mail({ loaderData }: Route.ComponentProps) {
   const [email, setEmail] = useQueryState('email', parseAsString);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+
+  // Email initialization effect
+  // useEffect(() => {
+  //   if ("mail" in loaderData) {
+  //     const existingEmail = localStorage.getItem('email');
+  //     if(existingEmail) {
+  //       setEmail(existingEmail);
+  //     } else {
+  //       setEmail(loaderData.mail.email);
+  //       navigator.clipboard.writeText(loaderData.mail.email);
+  //       localStorage.setItem('email', loaderData.mail.email);
+  //     }
+  //   } 
+  // }, [loaderData, setEmail]);
+
+  // Polling effect
+  // useEffect(() => {
+  //   if (!email) return;
+ 
+  //   const pollInterval = setInterval(() => {
+  //     navigate('.', { replace: true });
+  //   }, 1000);
+
+  //   return () => clearInterval(pollInterval);
+  // }, [email, navigate]);
 
   if("mails" in loaderData) {
     return loaderData.mails.length > 0 ? (
@@ -120,17 +145,6 @@ export default function Mail({ loaderData }: Route.ComponentProps) {
   }
 
   if("mail" in loaderData) {
-    useEffect(() => {
-      const existingEmail = localStorage.getItem('email');
-      if(existingEmail) {
-        setEmail(existingEmail);
-      } else {
-        setEmail(loaderData.mail.email);
-        navigator.clipboard.writeText(loaderData.mail.email);
-        localStorage.setItem('email', loaderData.mail.email);
-      }
-    }, [loaderData.mail.email])
-
     return <MailGenerate email={loaderData.mail.email} />
   }
 

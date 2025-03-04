@@ -86,7 +86,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
               }}
               className="text-sm rounded-xl"
             />
-          ),
+          ), 
           img: (props) => (
             <img
               {...props}
