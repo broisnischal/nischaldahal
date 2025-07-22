@@ -11,5 +11,8 @@ export default defineConfig({
   plugins: [reactRouter(), tailwind()],
   server: {
     allowedHosts: ['.snehaa.store'],
+    hmr: {
+      overlay: false
+    }
   },
 });

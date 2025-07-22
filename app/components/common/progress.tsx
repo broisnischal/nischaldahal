@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSpinDelay } from 'spin-delay';
 import { useNavigation } from 'react-router';
-import { cn } from '#app/lib/utils.tsx';
+import { cn } from '#app/lib/utils.ts';
 
 // Progress Bar
 export default function ProgessBar() {
 	const navigation = useNavigation();
 	const busy = navigation.state !== 'idle';
- 
+
 	const delayedPending = useSpinDelay(busy, {
 		delay: 600,
 		minDuration: 400,
@@ -41,9 +41,9 @@ export default function ProgessBar() {
 				className={cn(
 					'h-full w-0 bg-blue-500 duration-500 ease-in-out dark:bg-white',
 					navigation.state === 'idle' &&
-						(animationComplete
-							? 'transition-none'
-							: 'w-full opacity-0 transition-all'),
+					(animationComplete
+						? 'transition-none'
+						: 'w-full opacity-0 transition-all'),
 					delayedPending && navigation.state === 'submitting' && 'w-5/12',
 					delayedPending && navigation.state === 'loading' && 'w-8/12',
 				)}

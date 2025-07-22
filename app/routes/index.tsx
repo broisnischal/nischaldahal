@@ -1,5 +1,5 @@
 import { listAllArticles, type Article } from '#app/.server/content.server.js';
-import { CommonLayout } from '#app/components/ui/common_layout.tsx';
+import { CommonLayout } from '#app/components/common/common_layout.tsx';
 import { Link } from 'react-router';
 import type { Route } from './+types';
 

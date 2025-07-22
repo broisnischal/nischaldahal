@@ -4,4 +4,4 @@ export function CommonLayout({ children }: { children: React.ReactNode }) {
             {children}
         </div>
     )
-}
+} 

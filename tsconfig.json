@@ -13,7 +13,28 @@
     "jsx": "react-jsx",
     "noEmit": true,
     "allowImportingTsExtensions": true,
-    "types": ["@react-router/node", "vite/client"],
-    "rootDirs": [".", "./.react-router/types"]
+    "types": [
+      "@react-router/node",
+      "vite/client"
+    ],
+    "rootDirs": [
+      ".",
+      "./.react-router/types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "app/*": [
+        "app/*"
+      ],
+      "app/lib/*": [
+        "app/lib/*"
+      ],
+      "app/components/*": [
+        "app/components/*"
+      ],
+      "app/hooks/*": [
+        "app/hooks/*"
+      ]
+    }
   }
 }

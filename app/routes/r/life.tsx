@@ -1,4 +1,4 @@
-import { CommonLayout } from "#app/components/ui/common_layout.tsx";
+import { CommonLayout } from "#app/components/common/common_layout.tsx";
 
 export default function Page() {
     return (

@@ -12,9 +12,9 @@ import {
   useRouteError,
 } from 'react-router';
 import type { Route } from './+types/root';
-import Footer from './components/common/footer';
-import Navbar from './components/common/navbar';
-import { PublicEnv, ScriptDangerously } from './lib/utils';
+import Footer from '#app/components/common/footer.tsx';
+import Navbar from '#app/components/common/navbar.tsx';
+import { PublicEnv, ScriptDangerously } from '#app/lib/index.tsx';
 import { getPublicEnv } from './misc/env.common';
 import { useTheme } from './routes/resources/theme-switch';
 import { ClientHintCheck, getHints } from './utils/client-hints';
@@ -90,7 +90,7 @@ function Document({
       </head>
       <body className="">
         <Layout>
-          <ProgessBar/>
+          <ProgessBar />
 
           <Navbar theme={theme} />
           {children}
