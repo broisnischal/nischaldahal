@@ -34,8 +34,9 @@ services:
       - "traefik.http.routers.web.tls.certresolver=myresolver"
     environment:
       - NODE_ENV=production
-      - PORT=3000
+      - PORT=3000    
     deploy:
+      replicas: 3
       update_config:
         parallelism: 1
         delay: 10s
