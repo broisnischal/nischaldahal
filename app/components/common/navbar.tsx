@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 
 
 const links = [
-	{ name: 'index', to: '/' },
+	{ name: 'home', to: '/' },
 	{ name: 'life', to: '/life' },
 	{ name: 'github', to: 'github', href: 'https://github.com/broisnischal' }
 ]

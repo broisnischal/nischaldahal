@@ -12,10 +12,10 @@ export async function loader({ request, params }: Route.LoaderArgs) {
 
 export const meta: Route.MetaFunction = ({ data }) => {
   return [
-    { title: data.frontmatter.title },
+    { title: data?.frontmatter.title },
     {
       name: 'description',
-      content: data.frontmatter.title,
+      content: data?.frontmatter.title,
     },
   ];
 };
@@ -27,11 +27,11 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
     <div className="pt-12 pb-32 m-auto flex flex-col gap-4">
-      <div>
+      <div className="flex flex-col gap-2 mb-5">
         <p className="text-sm text-zinc-500 ">
           {moment(frontmatter.writtenAt).format('MMMM D, YYYY')}
         </p>
-        <h1 className="dark:!text-white text-xl text-blue-700 font-semibold">
+        <h1 className="dark:!text-white text-3xl text-blue-700 font-semibold">
           {frontmatter.title}
         </h1>
       </div>
@@ -86,7 +86,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
               }}
               className="text-sm rounded-xl"
             />
-          ), 
+          ),
           img: (props) => (
             <img
               {...props}

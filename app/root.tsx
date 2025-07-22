@@ -23,6 +23,7 @@ import ProgessBar from './components/common/progress';
 import { NuqsAdapter } from 'nuqs/adapters/react-router/v7'
 
 
+
 export async function loader({ request }: Route.LoaderArgs) {
   return data({
     requestInfo: {
@@ -70,6 +71,7 @@ function Document({
   loaderData: Route.ComponentProps['loaderData'];
   theme?: Theme | 'system';
 }) {
+
   return (
     <html lang="en" className={clsx(theme)} data-theme={theme}>
       <head>
@@ -89,6 +91,7 @@ function Document({
         <Links />
       </head>
       <body className="">
+
         <Layout>
           <ProgessBar />
 

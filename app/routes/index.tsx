@@ -21,8 +21,9 @@ export default function Page({ loaderData }: Route.ComponentProps) {
       <CommonLayout>
 
         <div>
-          <h1 className="">About me</h1>
-          <p className="text-zinc-500">a system architect 🚀 </p>
+          {/* <h1 className="">I </h1> */}
+          <p className="text-zinc-500">a system architect 🚀, </p>
+          <p className="text-zinc-500">I learn and build things. kinda wierd guy.</p>
         </div>
 
         {/* <ClientOnly>
