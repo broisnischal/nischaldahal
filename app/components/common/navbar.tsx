@@ -7,7 +7,8 @@ import { twMerge } from 'tailwind-merge';
 const links = [
 	{ name: 'home', to: '/' },
 	{ name: 'setup', to: '/setup' },
-	{ name: 'github', to: 'github', href: 'https://github.com/broisnischal' }
+	{ name: 'github', to: 'github', href: 'https://github.com/broisnischal' },
+	{ name: <span className="text-pink-500 !hover:scale-110 transition-all duration-300">💖</span>, to: 'love', href: 'https://ko-fi.com/nischaldahal' }
 ]
 
 export default function Navbar({ theme }: { theme: Theme | 'system' }) {

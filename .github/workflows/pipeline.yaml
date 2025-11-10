@@ -58,7 +58,7 @@ jobs:
       with:
         name: nischaldahal
         file: docker-stack.yaml
-        host: broisnees.tech
+        host: nischal-dahal.com.np
         user: root
         ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
         env_file: ./envfile

@@ -6,7 +6,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entryPoints.websecure.address=:443"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=nischal@broisnees.tech"
+      - "--certificatesresolvers.myresolver.acme.email=info@nischal-dahal.com.np"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
@@ -29,7 +29,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.web.loadbalancer.server.port=3000"
-      - "traefik.http.routers.web.rule=Host(`broisnees.tech`)"
+      - "traefik.http.routers.web.rule=Host(`nischal-dahal.com.np`)"
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls.certresolver=myresolver"
     environment:
