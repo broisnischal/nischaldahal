@@ -1,13 +1,12 @@
 import { ThemeSwitch } from '#app/routes/resources/theme-switch.tsx';
 import type { Theme } from '#app/utils/theme.server.ts';
 import { NavLink } from 'react-router';
-import { ClientOnly } from 'remix-utils/client-only';
 import { twMerge } from 'tailwind-merge';
 
 
 const links = [
 	{ name: 'home', to: '/' },
-	{ name: 'life', to: '/life' },
+	{ name: 'setup', to: '/setup' },
 	{ name: 'github', to: 'github', href: 'https://github.com/broisnischal' }
 ]
 

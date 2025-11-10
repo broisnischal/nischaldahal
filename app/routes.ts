@@ -11,7 +11,7 @@ export default [
   route('image/:id', 'routes/image-details.tsx'),
 
   // Pages
-  route('life', 'routes/r/life.tsx'),
+  route('setup', 'routes/r/setup.tsx'),
   // route('mail', 'routes/r/mail/index.tsx'),
 
   // Others
