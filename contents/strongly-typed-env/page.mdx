@@ -1,6 +1,6 @@
 ---
-title: Strongly Typed Environment Variables in React Router
-description: Strongly Typed Environment Variables in React Router
+title: Typed client and server environment variables in Rv7
+description: Learn how to create and integrate strongly typed environemnt variable in react router or remix
 published: 2025-02-20
 featured: true
 tags: [khalti, payment, nepal, webcheckout]
@@ -9,7 +9,6 @@ readTime: 3
 author: Nischal Dahal
 --- 
 import TOC  from '#app/components/common/toc.tsx';
- 
 
 <TOC>
 - [Introduction](#introduction)
@@ -21,8 +20,7 @@ import TOC  from '#app/components/common/toc.tsx';
 - [Conclusion](#conclusion)
 </TOC>
 
-
-### Introduction
+## Introduction
 
 Today we are going to learn, how to create and integrate strongly typed environemnt variable in react router or remix,
 let's get started by creating the `env.common.ts` file in misc, or utils folder.
@@ -191,7 +189,10 @@ const envArkSchema = type({
 const getArkEnv = makeTypedEnvironment((d) => envArkSchema.assert(d));
 ```
 
-### Conclusion
+<br/>
+
+## Conclusion
+
 
 In this article, we have learned how to create and integrate strongly typed environemnt variable in react router or remix,
 

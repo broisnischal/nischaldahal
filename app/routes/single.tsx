@@ -4,6 +4,7 @@ import moment from 'moment';
 import React from 'react';
 import type { Route } from './+types/single.ts';
 import { useTheme } from './resources/theme-switch.tsx';
+import { Separator } from '#app/components/ui/separator.tsx';
 
 export async function loader({ request, params }: Route.LoaderArgs) {
   const data = await bundlePost(params.slug, request);
@@ -17,6 +18,10 @@ export const meta: Route.MetaFunction = ({ data }) => {
       name: 'description',
       content: data?.frontmatter.title,
     },
+    {
+      name: 'keywords',
+      content: data?.frontmatter.category,
+    },
   ];
 };
 
@@ -26,20 +31,16 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   const { code, frontmatter } = loaderData;
   const Component = React.useMemo(() => getMDXComponent(code), [code]);
   return (
-    <div className="pt-12 pb-32 m-auto flex flex-col gap-4">
-      <div className="flex flex-col gap-2 mb-5">
+    <div className="pt-12 m-auto flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         <p className="text-sm text-zinc-500 ">
           {moment(frontmatter.writtenAt).format('MMMM D, YYYY')}
         </p>
-        <h1 className="dark:!text-white text-3xl text-blue-700 font-semibold">
+        <h1 className="dark:!text-zinc-50 text-2xl md:text-3xl text-blue-700 font-serif">
           {frontmatter.title}
         </h1>
       </div>
-      {/*
-      <p className="text-sm text-gray-600 dark:text-gray-400">
-        {frontmatter?.description}
-      </p> */}
-
+      <Separator className="my-2 w-auto" />
       <Component
         // mdx allow you to customize the components used in the markdown
         // this is optional but in most use cases you want to customize them

@@ -76,11 +76,12 @@
 }
 
 .toc a {
-  @apply !no-underline text-blue-700  dark:text-zinc-400 font-[500] hover:!underline hover:text-black dark:hover:text-white;
+  @apply !no-underline text-zinc-500  dark:text-zinc-400 font-[500] hover:!underline hover:text-zinc-600 dark:hover:text-zinc-300;
 }
 
 .toc a:hover {
   text-decoration: underline;
+  color: var(--color-zinc-600);
 }
 
 :target {

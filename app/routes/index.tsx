@@ -9,7 +9,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const verbs = ['eccentric', 'inquistive', 'enthusiastic', 'explorer', 'hustler', 'insurgent', 'maverick', 'renegade'];
 
-  const verb = verbs[Math.floor(Math.random() * verbs.length + 1)];
+  const verb = verbs[Math.floor(Math.random() * verbs.length - 1)];
 
   return {
     posts: await listAllArticles(request),
@@ -22,14 +22,11 @@ export async function loader({ request }: Route.LoaderArgs) {
 export function Header({ verb }: { verb?: string }) {
 
   return (
-    <div>
-      <div className="">
-        <h4 className="text-sm leading-none font-medium">a.k.a System architect <Kbd className="!text-xs !text-zinc-500 dark:!text-zinc-400">🚀</Kbd></h4>
-        <p className="text-muted-foreground text-sm">
-          I learn and love about technology, and also a <Kbd className="!text-xs">{verb || 'indefinite person'}</Kbd>.
-        </p>
-      </div>
-      <Separator className="my-4 w-min" />
+    <div className="flex flex-col gap-2">
+      <h4 className="text-sm leading-none font-medium">a.k.a System architect <Kbd className="!text-xs !text-zinc-500 dark:!text-zinc-400">🚀</Kbd></h4>
+      <p className="text-muted-foreground text-sm">
+        I learn and love about technology, and also a <Kbd className="!text-xs">{verb || 'indefinite person'}</Kbd>.
+      </p>
     </div>
   )
 }
@@ -42,40 +39,9 @@ export default function Page({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <CommonLayout>
-
-        {/* <p className="text-zinc-700 dark:text-zinc-50">a system architect 🚀 </p>
-          <p className="text-zinc-700 dark:text-zinc-50"></p>
-          <p>synonym for broisnees is <Kbd>eccentric</Kbd></p> */}
         <Header verb={loaderData.verb} />
-
-        {/* <ClientOnly>
-          {() => {
-            console.log(window.PUBLIC_ENV);
-            return <h1>{window.PUBLIC_ENV?.googleMapsApiKey} </h1>;
-          }}
-        </ClientOnly> */}
-
-        <br />
-
-        {/* {getPublicEnv().stripePublicKey} */}
-
+        <Separator className="my-2 w-auto" />
         <Blogs data={loaderData.posts} url={loaderData.url.toString()} />
-
-        {/* <div className="image-list">
-          <h1>Image List</h1>
-          <div>
-            {images.map((src, idx) => (
-              <NavLink
-                key={src}
-                to={`/image/${idx}`}
-                viewTransition // Enable view transitions for this link
-              >
-                <p>Image Number {idx}</p>
-                <img className="max-w-full contain-layout" src={src} />
-              </NavLink>
-            ))}
-          </div>
-        </div> */}
       </CommonLayout>
     </>
   );
@@ -88,8 +54,6 @@ function Blogs({
   data: (Article & { slug: string })[];
   url: string;
 }) {
-  // let value = use(data);
-
   return (
     <div>
       <p className="text-zinc-700 dark:text-zinc-50 mb-2">

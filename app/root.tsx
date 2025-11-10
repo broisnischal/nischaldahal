@@ -90,7 +90,7 @@ function Document({
         <Meta />
         <Links />
       </head>
-      <body className="">
+      <body className="max-w-3xl m-auto">
 
         <Layout>
           <ProgessBar />

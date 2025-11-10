@@ -14,7 +14,7 @@ export default function Navbar({ theme }: { theme: Theme | 'system' }) {
 
 
 	return (
-		<div className="m-auto mt-10 flex flex-row items-center gap-3">
+		<div className="m-auto mt-6 flex flex-row items-center gap-3">
 			<ThemeSwitch userPreference={theme} key={theme} />
 			{links.map(item => <LinkItem key={item.name} {...item} />)}
 			{/* {<ClientOnly>
